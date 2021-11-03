@@ -1,8 +1,6 @@
-# n8n-nodes-starter
+# n8n-nodes-humhub
 
-![n8n.io - Workflow Automation](https://raw.githubusercontent.com/n8n-io/n8n/master/docs/images/n8n-logo.png)
-
-Example starter module for custom n8n nodes.
+An n8n node consuming HumHub API.
 
 
 ## License
