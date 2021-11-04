@@ -106,7 +106,7 @@ export const  mailTagFields = [
 			},
 		},
 		default: '',
-		description: 'Conversation tags.', //todo Array of any
+		description: 'Conversation tags separated by comma. Example: Work,Travel',
 	},
 
 ] as INodeProperties[];

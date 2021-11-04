@@ -65,6 +65,8 @@ export const notificationFields = [
 				],
 			},
 		},
+		default: [],
+		description: 'Filters to exclude notifications from result.',
 		options: [
 			{
 				name: 'Admin',
@@ -107,7 +109,6 @@ export const notificationFields = [
 				value: 'mentioned',
 			},
 		],
-		description: 'Filters to exclude notifications from result.',
 	},
 	...getPagingParameters('notification'),
 

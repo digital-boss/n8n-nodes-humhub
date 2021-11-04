@@ -74,7 +74,7 @@ export const spaceFields = [
 
 	{
 		displayName: 'Name',
-		name: 'Name',
+		name: 'name',
 		type: 'string',
 		required: true,
 		displayOptions: {
@@ -261,7 +261,7 @@ export const spaceFields = [
 	},
 	{
 		displayName: 'Space',
-		name: 'SpaceUi',
+		name: 'spaceUi',
 		type: 'collection',
 		required: true,
 		displayOptions: {

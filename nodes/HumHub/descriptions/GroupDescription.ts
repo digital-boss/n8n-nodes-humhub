@@ -25,32 +25,32 @@ export const groupOperations = [
 				description: 'Find All Groups',
 			},
 			{
-				name: 'Create Group',
-				value: 'createGroup',
-				description: '',//todo
+				name: 'Create',
+				value: 'create',
+				description: 'Add a new group',
 			},
 			{
-				name: 'Get Group',
-				value: 'getGroup',
-				description: '',
+				name: 'Get',
+				value: 'get',
+				description: 'Get group by id',
 			},
 			{
 				name: 'Get All Members',
 				value: 'getAllMembers',
-				description: '',
+				description: 'List members',
 			},
 			{
 				name: 'Add Member',
 				value: 'addMember',
-				description: '',
+				description: 'Add a new member',
 			},
 			{
 				name: 'Delete Member',
 				value: 'deleteMember',
-				description: '',
+				description: 'Remove a member',
 			},
 		],
-		default: 'createGroup',
+		default: 'getAll',
 		description: 'The operation to perform.',
 	},
 ] as INodeProperties[];
@@ -64,7 +64,7 @@ export const  groupFields = [
 	...getPagingParameters('group', 'getAll'),
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 group:createGroup                          */
+	/*                                 group:create			                      */
 	/* -------------------------------------------------------------------------- */
 
 	{
@@ -78,7 +78,7 @@ export const  groupFields = [
 					'group',
 				],
 				operation: [
-					'createGroup',
+					'create',
 				],
 			},
 		},
@@ -95,7 +95,7 @@ export const  groupFields = [
 					'group',
 				],
 				operation: [
-					'createGroup',
+					'create',
 				],
 			},
 		},
@@ -112,7 +112,7 @@ export const  groupFields = [
 					'group',
 				],
 				operation: [
-					'createGroup',
+					'create',
 				],
 			},
 		},
@@ -129,7 +129,7 @@ export const  groupFields = [
 					'group',
 				],
 				operation: [
-					'createGroup',
+					'create',
 				],
 			},
 		},
@@ -149,7 +149,7 @@ export const  groupFields = [
 					'group',
 				],
 				operation: [
-					'createGroup',
+					'create',
 				],
 			},
 		},
@@ -158,7 +158,7 @@ export const  groupFields = [
 	},
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 group:getGroup                              */
+	/*                                 group:get		                          */
 	/* -------------------------------------------------------------------------- */
 
 	{
@@ -175,7 +175,7 @@ export const  groupFields = [
 					'group',
 				],
 				operation: [
-					'getGroup',
+					'get',
 				],
 			},
 		},
@@ -184,7 +184,7 @@ export const  groupFields = [
 	},
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 group:getAllMembers                              */
+	/*                                 group:getAllMembers                        */
 	/* -------------------------------------------------------------------------- */
 	 {
 		displayName: 'ID',
@@ -208,10 +208,8 @@ export const  groupFields = [
 		description: 'The ID of the group they belong to.',
 	},
 
-	...getPagingParameters('group', 'getAllMembers'),
-
 	/* -------------------------------------------------------------------------- */
-	/*                                 group:addMember                              */
+	/*                                 group:addMember                            */
 	/* -------------------------------------------------------------------------- */
 
 	{
@@ -275,7 +273,7 @@ export const  groupFields = [
 	},
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 group:deleteMember                              */
+	/*                                 group:deleteMember                         */
 	/* -------------------------------------------------------------------------- */
 
 	{

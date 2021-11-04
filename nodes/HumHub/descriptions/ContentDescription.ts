@@ -51,6 +51,28 @@ export const  contentFields = [
 	/*                                 content:getAll                              */
 	/* -------------------------------------------------------------------------- */
 
+	{
+		displayName: 'ID',
+		name: 'id',
+		type: 'number',
+		required: true,
+        typeOptions: {
+            minValue: 0,
+            numberStepSize: 1,
+        },
+		displayOptions: {
+			show: {
+				resource: [
+					'content',
+				],
+				operation: [
+					'getAll',
+				],
+			},
+		},
+		default: '',
+		description: 'The id of the content container',
+	},
 	...getPagingParameters('content'),
 
 	/* -------------------------------------------------------------------------- */

@@ -184,43 +184,39 @@ export const  cFileFields = [
 		description: '',
 	},
 	{
-		displayName: 'Description',
-		name: 'Description',
-		type: 'string',
-		default: '',
-        displayOptions: {
-            show: {
+		displayName: 'Folder Additional Fields',
+		name: 'folderAdditionalFields',
+		type: 'collection',
+		required: true,
+
+		displayOptions: {
+			show: {
 				resource: [
 					'cFile',
 				],
 				operation: [
 					'createDirectory',
 				],
-            },
-        },
+			},
+		},
+		default: [],
 		description: '',
-	},
-	{
-		displayName: 'Visibility',
-		name: 'visibility',
-		type: 'number',
-        typeOptions: {
-			minValue: 0,
-			maxValue: 1,
-            numberStepSize: 1,
-        },
-        displayOptions: {
-            show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'createDirectory',
-				],
-            },
-        },
-		default: '',
-		description: 'Allowed visibility statuses: 0 - Private; 1 - Public',
+		options: [
+			{
+				displayName: 'Description',
+				name: 'Description',
+				type: 'string',
+				default: '',
+				description: '',
+			},
+			{
+				displayName: 'Visibility',
+				name: 'visibility',
+				type: 'number',
+				default: '',
+				description: 'Allowed visibility statuses: 0 - Private; 1 - Public',
+			},
+		],
 	},
 
 	/* -------------------------------------------------------------------------- */
@@ -278,7 +274,6 @@ export const  cFileFields = [
 		displayName: 'Target ID',
 		name: 'targetId',
 		type: 'number',
-		required: true,
         typeOptions: {
             numberStepSize: 1,
         },
@@ -295,62 +290,45 @@ export const  cFileFields = [
 		default: '',
 		description: 'The id of the target directory',
 	},
-    {
-		displayName: 'Title',
-		name: 'title',
-		type: 'string',
-		required: true,
-        displayOptions: {
-            show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'updateDirectory',
-				],
-            },
-        },
-		default: '',
-		description: '',
-	},
 	{
-		displayName: 'Description',
-		name: 'Description',
-		type: 'string',
-		default: '',
-        displayOptions: {
-            show: {
+		displayName: 'Folder',
+		name: 'folder',
+		type: 'collection',
+		displayOptions: {
+			show: {
 				resource: [
 					'cFile',
 				],
 				operation: [
 					'updateDirectory',
 				],
-            },
-        },
+			},
+		},
+		default: [],
 		description: '',
-	},
-	{
-		displayName: 'Visibility',
-		name: 'visibility',
-		type: 'number',
-        typeOptions: {
-			minValue: 0,
-			maxValue: 1,
-            numberStepSize: 1,
-        },
-        displayOptions: {
-            show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'updateDirectory',
-				],
-            },
-        },
-		default: '',
-		description: 'Allowed visibility statuses: 0 - Private; 1 - Public',
+		options: [
+			{
+				displayName: 'Title',
+				name: 'title',
+				type: 'string',
+				default: '',
+				description: '',
+			},
+			{
+				displayName: 'Description',
+				name: 'Description',
+				type: 'string',
+				default: '',
+				description: '',
+			},
+			{
+				displayName: 'Visibility',
+				name: 'visibility',
+				type: 'number',
+				default: '',
+				description: 'Allowed visibility statuses: 0 - Private; 1 - Public',
+			},
+		],
 	},
 
 

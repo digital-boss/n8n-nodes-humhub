@@ -97,9 +97,9 @@ export const  postFields = [
 			},
 		},
 		default: '',
-		description: 'Coma separated list of topics to filter. Example: Music,Dancing',
+		description: 'Comma separated list of topics to filter. Example: Music,Dancing',
 	},
-	...getPagingParameters('container'),
+	...getPagingParameters('post', 'getAllByContainer'),
 
 	/* -------------------------------------------------------------------------- */
 	/*                                 post:create                         		     */

@@ -175,7 +175,7 @@ export const  wikiPageFields = [
 	},
     {
 		displayName: 'Wiki Page Title',
-		name: 'title',
+		name: 'wikiPageTitle',
 		type: 'string',
 		required: true,
 		displayOptions: {
@@ -193,7 +193,7 @@ export const  wikiPageFields = [
 	},
 	{
 		displayName: 'Wiki Page Additional Fields',
-		name: 'WikiPageAdditionalFields',
+		name: 'wikiPageAdditionalFields',
 		type: 'collection',
 		displayOptions: {
 			show: {
@@ -240,7 +240,7 @@ export const  wikiPageFields = [
 	},
 	{
 		displayName: 'Revision Content',
-		name: 'content',
+		name: 'revisionContent',
 		type: 'string',
 		required: true,
 		displayOptions: {
@@ -257,8 +257,8 @@ export const  wikiPageFields = [
 		description: 'Wiki page revision content.',
 	},
 	{
-		displayName: 'Page Edit Form Additional Fields',
-		name: 'PageEditFormAdditionalFields',
+		displayName: 'Page Edit Form',
+		name: 'pageEditForm',
 		type: 'collection',
 		displayOptions: {
 			show: {
@@ -342,8 +342,8 @@ export const  wikiPageFields = [
 		description: 'The id of content container.',
 	},
 	{
-		displayName: 'Wiki Page Additional Fields',
-		name: 'WikiPageAdditionalFields',
+		displayName: 'Wiki Page',
+		name: 'wikiPage',
 		type: 'collection',
 		displayOptions: {
 			show: {
@@ -396,9 +396,9 @@ export const  wikiPageFields = [
 		],
 	},
 	{
-		displayName: 'Revision Content',
-		name: 'content',
-		type: 'string',
+		displayName: 'Wiki Page Revision',
+		name: 'wikiPageRevision',
+		type: 'collection',
 		displayOptions: {
 			show: {
 				resource: [
@@ -409,12 +409,21 @@ export const  wikiPageFields = [
 				],
 			},
 		},
-		default: '',
-		description: 'Wiki page revision content.',
+		default: [],
+		description: '',
+		options: [
+			{
+				displayName: 'Revision Content',
+				name: 'revisionContent',
+				type: 'string',
+				default: '',
+				description: 'Wiki page revision content.',
+			},
+		],
 	},
 	{
-		displayName: 'Page Edit Form Additional Fields',
-		name: 'PageEditFormAdditionalFields',
+		displayName: 'Page Edit Form',
+		name: 'pageEditForm',
 		type: 'collection',
 		displayOptions: {
 			show: {

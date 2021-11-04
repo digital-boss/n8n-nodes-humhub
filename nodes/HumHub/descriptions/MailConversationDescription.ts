@@ -104,7 +104,7 @@ export const  mailConversationFields = [
 			},
 		},
 		default: '',
-		description: 'Guid of users.', // todo Array of any
+		description: 'Guid of users separated by comma. Example: 8eddbecb-8207-4848-bba6-5910115d3e4a,b6b66077-916d-4718-af28-5ffc20895d30',
 	},
 
 	/* -------------------------------------------------------------------------- */
@@ -112,8 +112,8 @@ export const  mailConversationFields = [
 	/* -------------------------------------------------------------------------- */
 
 	{
-		displayName: 'ID',
-		name: 'id',
+		displayName: 'Message ID',
+		name: 'messageId',
 		type: 'number',
 		required: true,
         typeOptions: {

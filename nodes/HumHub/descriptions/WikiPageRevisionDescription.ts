@@ -48,7 +48,7 @@ export const  wikiPageRevisionFields = [
 
 	{
 		displayName: 'Page ID',
-		name: 'padeId',
+		name: 'pageId',
 		type: 'number',
 		required: true,
         typeOptions: {

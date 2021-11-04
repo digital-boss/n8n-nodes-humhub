@@ -546,13 +546,27 @@ export class HumHub implements INodeType {
 							show_at_directory: showAtDirectory,
 							show_at_registration: showAtRegistration,
 							sort_order: sortOrder,
-						};
+						}; //todo
 
 						responseData = await humhubApiRequest.call(
 							this,
 							'POST',
 							`/user/group`,
 							body,
+						);
+
+					} else if (operation === 'get') {
+
+						// ----------------------------------------
+						//             group:get
+						// ----------------------------------------
+
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'GET',
+							`/user/group/${id}`,
 						);
 
 					} else if (operation === 'getAllMembers') {
@@ -563,31 +577,14 @@ export class HumHub implements INodeType {
 
 						const id = this.getNodeParameter('id', i) as number;
 
-						//todo can paging fields be passed?
-						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
-						if (returnAll) {
-							responseData = await humhubApiRequestAllItems.call(
-								this,
-								'spaces',
-								'GET',
-								`/user/group/${id}`,
-								undefined,
-								qs,
-							);
-						}
-						else {
-							// get additional fields input for pageSize and pageToken
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
-
-							responseData = await humhubApiRequest.call(
-								this,
-								'GET',
-								`/user/group/${id}`,
-								undefined,
-								qs,
-							);
-						}
+						//todo simplify output
+						responseData = await humhubApiRequest.call(
+							this,
+							'GET',
+							`/user/group/${id}/member`,
+							undefined,
+							qs,
+						);
 
 					} else if (operation === 'addMember') {
 
@@ -596,15 +593,15 @@ export class HumHub implements INodeType {
 						// ----------------------------------------
 
 						const id = this.getNodeParameter('id', i) as number;
-						const userId = this.getNodeParameter('userId', i) as string;
+						const userId = this.getNodeParameter('userId', i) as number;
 						const isManager = this.getNodeParameter('isManager', i) as boolean;
 						qs.userId = userId;
 						qs.isManager = isManager;
 
 						responseData = await humhubApiRequest.call(
 							this,
-							'POST',
-							`/user/group/${id}`,
+							'PUT',
+							`/user/group/${id}/member`,
 							undefined,
 							qs,
 						);
@@ -658,7 +655,7 @@ export class HumHub implements INodeType {
 								this,
 								'results',
 								'GET',
-								`/v1/content/findByContainer/${id}`,
+								`/content/findByContainer/${id}`,
 							);
 						}
 						else {
@@ -669,7 +666,7 @@ export class HumHub implements INodeType {
 							responseData = await humhubApiRequest.call(
 								this,
 								'GET',
-								`/v1/content/findByContainer/${id}`,
+								`/content/findByContainer/${id}`,
 								undefined,
 								qs,
 							);
@@ -686,7 +683,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'GET',
-							`/v1/content/${id}`,
+							`/content/${id}`,
 						);
 
 					} else if (operation === 'delete') {
@@ -700,10 +697,39 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'DELETE',
-							`/v1/content/${id}`,
+							`/content/${id}`,
 						);
 
+					} else if (operation === 'getAllContainers') {
+
+						// ----------------------------------------
+						//             content:getAllContainers
+						// ----------------------------------------
+
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/content/container`,
+							);
+						}
+						else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/content/container`,
+								undefined,
+								qs,
+							);
+						}
 					}
+
 				} else if (resource === 'post') {
 					if (operation === 'getAllByContainer') {
 
@@ -712,7 +738,7 @@ export class HumHub implements INodeType {
 						// ----------------------------------------
 
 						const id = this.getNodeParameter('id', i) as number;
-						qs.tpics = this.getNodeParameter('topics', i) as string;
+						qs.topics = this.getNodeParameter('topics', i) as string;
 
 						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
 						if (returnAll) {
@@ -721,6 +747,8 @@ export class HumHub implements INodeType {
 								'results',
 								'GET',
 								`/post/container/${id}`,
+								undefined,
+								qs,
 							);
 						}
 						else {
@@ -745,16 +773,18 @@ export class HumHub implements INodeType {
 
 						const id = this.getNodeParameter('id', i) as number;
 						const message = this.getNodeParameter('message', i) as IDataObject;
-						qs.data = {
-							message
+
+						const body: IDataObject = {
+							data: {
+								message
+							}
 						};
 
 						responseData = await humhubApiRequest.call(
 							this,
 							'POST',
 							`/post/container/${id}`,
-							undefined,
-							qs,
+							body,
 						);
 
 					} else if (operation === 'getAll') {
@@ -808,16 +838,18 @@ export class HumHub implements INodeType {
 
 						const id = this.getNodeParameter('id', i) as number;
 						const message = this.getNodeParameter('message', i) as IDataObject;
-						qs.data = {
-							message
+
+						const body: IDataObject = {
+							data: {
+								message
+							}
 						};
 
 						responseData = await humhubApiRequest.call(
 							this,
-							'POST',
+							'PUT',
 							`/post/${id}`,
-							undefined,
-							qs,
+							body,
 						);
 
 					} else if (operation === 'delete') {
@@ -1248,11 +1280,11 @@ export class HumHub implements INodeType {
 							`/space/${id}/unarchive`,
 						);
 					}
-				} else if (resource === 'membership') {
+				} else if (resource === 'spaceMembership') {
 					if (operation === 'getAll') {
 
 						// ----------------------------------------
-						//             membership:getAll
+						//             spaceMembership:getAll
 						// ----------------------------------------
 
 						const id = this.getNodeParameter('id', i) as number;
@@ -1282,7 +1314,7 @@ export class HumHub implements INodeType {
 					} else if (operation === 'create') {
 
 						// ----------------------------------------
-						//             membership:create
+						//             spaceMembership:create
 						// ----------------------------------------
 
 						const id = this.getNodeParameter('id', i) as number;
@@ -1301,7 +1333,7 @@ export class HumHub implements INodeType {
 					} else if (operation === 'delete') {
 
 						// ----------------------------------------
-						//             membership:delete
+						//             spaceMembership:delete
 						// ----------------------------------------
 
 						const id = this.getNodeParameter('id', i) as number;
@@ -1313,10 +1345,10 @@ export class HumHub implements INodeType {
 							`/space/${id}/membership/${userId}`,
 						);
 
-					} else if (operation === 'delete') {
+					} else if (operation === 'update') {
 
 						// ----------------------------------------
-						//             membership:delete
+						//             spaceMembership:update
 						// ----------------------------------------
 
 						const id = this.getNodeParameter('id', i) as number;
@@ -1327,7 +1359,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'PATCH',
-							`/space/${id}/membership/${userId}`,
+							`/space/${id}/membership/${userId}/role`,
 							undefined,
 							qs,
 						);
@@ -1453,7 +1485,7 @@ export class HumHub implements INodeType {
 
 						responseData = await humhubApiRequest.call(
 							this,
-							'GET',
+							'POST',
 							`/topic/container/${containerId}`,
 							body,
 						);
@@ -1472,7 +1504,7 @@ export class HumHub implements INodeType {
 								this,
 								'results',
 								'GET',
-								`/topic`,
+								`/calendar`,
 							);
 						} else {
 							// get additional fields input for limit and page
@@ -1482,7 +1514,7 @@ export class HumHub implements INodeType {
 							responseData = await humhubApiRequest.call(
 								this,
 								'GET',
-								`/topic`,
+								`/calendar`,
 								undefined,
 								qs,
 							);
@@ -1495,12 +1527,48 @@ export class HumHub implements INodeType {
 						// ----------------------------------------
 
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						qs.topics = this.getNodeParameter('topics', i) as string;
+
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/calendar/container/${id}`,
+								undefined,
+								qs,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/calendar/container/${id}`,
+								undefined,
+								qs,
+							);
+						}
+
+
 					} else if (operation === 'deleteAllByContainer') {
 
 						// ----------------------------------------
 						//             calendar:deleteAllByContainer
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/calendar/container/${id}`,
+						);
 
 					} else if (operation === 'create') {
 
@@ -1508,6 +1576,26 @@ export class HumHub implements INodeType {
 						//             calendar:create
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const calendarEntry = this.getNodeParameter('calendarEntryAdditionalFields', i) as IDataObject;
+						calendarEntry.title =  this.getNodeParameter('calendarEntryTitle', i) as string;
+
+						const calendarEntryForm = this.getNodeParameter('calendarEntryFormAdditionalFields', i) as IDataObject;
+						calendarEntryForm.start_date = this.getNodeParameter('calendarEntryFormStartDate', i) as string;
+						calendarEntryForm.end_date = this.getNodeParameter('calendarEntryFormEndDate', i) as string;
+
+						const body: IDataObject = {
+							CalendarEntry: calendarEntry,
+							CalendarEntryForm: calendarEntryForm,
+						},
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`/calendar/container/${id}`,
+							body,
+						);
 
 					} else if (operation === 'get') {
 
@@ -1515,6 +1603,13 @@ export class HumHub implements INodeType {
 						//             calendar:get
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'GET',
+							`/calendar/entry/${id}`,
+						);
 
 					} else if (operation === 'update') {
 
@@ -1522,6 +1617,22 @@ export class HumHub implements INodeType {
 						//             calendar:update
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const calendarEntry = this.getNodeParameter('calendarEntry', i) as IDataObject;
+						const calendarEntryForm = this.getNodeParameter('calendarEntryForm', i) as IDataObject;
+
+						const body: IDataObject = {
+							CalendarEntry: calendarEntry,
+							CalendarEntryForm: calendarEntryForm,
+						},
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PUT',
+							`/calendar/entry/${id}`,
+							body,
+						);
 
 					} else if (operation === 'delete') {
 
@@ -1529,6 +1640,13 @@ export class HumHub implements INodeType {
 						//             calendar:delete
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/calendar/entry/${id}`,
+						);
 
 					} else if (operation === 'attachFiles') {
 
@@ -1536,6 +1654,19 @@ export class HumHub implements INodeType {
 						//             calendar:attachFiles
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+						const files = this.getNodeParameter('files', i) as string; //todo array of file
+
+						const body: IDataObject = {
+							files,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`calendar/entry/${id}/upload-files`,
+							body,
+						);
 
 					} else if (operation === 'removeFile') {
 
@@ -1543,6 +1674,18 @@ export class HumHub implements INodeType {
 						//             calendar:removeFile
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+						const fileId = this.getNodeParameter('fileId', i) as string;
+						qs.id = id;
+						qs.fileId = fileId;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`calendar/entry/${id}/remove-file`,
+							undefined,
+							qs,
+						);
 
 					} else if (operation === 'changeParticipant') {
 
@@ -1550,6 +1693,19 @@ export class HumHub implements INodeType {
 						//             calendar:changeParticipant
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+						const type = this.getNodeParameter('type', i) as number;
+
+						const body: IDataObject = {
+							type,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`calendar/entry/${id}/respond`,
+							body,
+						);
 
 					}
 
@@ -1560,12 +1716,59 @@ export class HumHub implements INodeType {
 						//             cFile:getAllDirectories
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/cfiels/folders/container/${id}`,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/cfiels/folders/container/${id}`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'createDirectory') {
 
 						// ----------------------------------------
 						//             cFile:createDirectory
 						// ----------------------------------------
+
+						const id = this.getNodeParameter('id', i) as number;
+
+						const targetId = this.getNodeParameter('targetId', i) as number;
+
+						const title = this.getNodeParameter('title', i) as string;
+						const folder: IDataObject = {
+							title
+						};
+						// assign description and visibility
+						const folderAdditionalFields = this.getNodeParameter('folderAdditionalFields', i) as IDataObject;
+						Object.assign(folder, folderAdditionalFields);
+
+						const body: IDataObject = {
+							target_id: targetId,
+							Folder: folder,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+								`/cfiels/folders/container/${id}`,
+							body,
+						);
 
 
 					} else if (operation === 'getDirectory') {
@@ -1574,6 +1777,13 @@ export class HumHub implements INodeType {
 						//             cFile:getDirectory
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'GET',
+							`/cfiels/folder/${id}`,
+						);
 
 					} else if (operation === 'updateDirectory') {
 
@@ -1581,6 +1791,21 @@ export class HumHub implements INodeType {
 						//             cFile:updateDirectory
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const targetId = this.getNodeParameter('targetId', i) as number;
+						const folder = this.getNodeParameter('folder', i) as IDataObject;
+						const body: IDataObject = {
+							target_id: targetId,
+							Folder: folder,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PUT',
+							`/cfiels/folder/${id}`,
+							body,
+						);
 
 					} else if (operation === 'deleteDirectory') {
 
@@ -1588,6 +1813,13 @@ export class HumHub implements INodeType {
 						//             cFile:deleteDirectory
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/cfiels/folder/${id}`,
+						);
 
 					} else if (operation === 'getAll') {
 
@@ -1595,6 +1827,29 @@ export class HumHub implements INodeType {
 						//             cFile:getAll
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/cfiels/files/container/${id}`,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/cfiels/files/container/${id}`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'upload') {
 
@@ -1602,6 +1857,22 @@ export class HumHub implements INodeType {
 						//             cFile:upload
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const folderId = this.getNodeParameter('folder_id', i) as number;
+						const files = this.getNodeParameter('files', i) as string; //todo array of file
+
+						const body: IDataObject = {
+							folder_id: folderId,
+							files,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`/cfiels/files/container/${id}`,
+							body,
+						);
 
 					} else if (operation === 'get') {
 
@@ -1609,6 +1880,13 @@ export class HumHub implements INodeType {
 						//             cFile:get
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'GET',
+							`/cfiels/file/${id}`,
+						);
 
 					} else if (operation === 'delete') {
 
@@ -1616,6 +1894,13 @@ export class HumHub implements INodeType {
 						//             cFile:delete
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/cfiels/file/${id}`,
+						);
 
 					} else if (operation === 'makePublic') {
 
@@ -1623,6 +1908,19 @@ export class HumHub implements INodeType {
 						//             cFile:makePublic
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+						const selection = this.getNodeParameter('selection', i) as string;
+
+						const body: IDataObject = {
+							selection
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PATCH',
+							`/cfiels/items/container/${id}/make-public`,
+							body,
+						);
 
 					} else if (operation === 'makePrivate') {
 
@@ -1630,6 +1928,19 @@ export class HumHub implements INodeType {
 						//             cFile:makePrivate
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+						const selection = this.getNodeParameter('selection', i) as string;
+
+						const body: IDataObject = {
+							selection
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PATCH',
+							`/cfiels/items/container/${id}/make-private`,
+							body,
+						);
 
 					} else if (operation === 'moveToFolder') {
 
@@ -1637,6 +1948,26 @@ export class HumHub implements INodeType {
 						//             cFile:moveToFolder
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const sourceId = this.getNodeParameter('source_id', i) as number;
+						const destId = this.getNodeParameter('destId', i) as string;
+						const selection = this.getNodeParameter('selection', i) as string;
+
+						const body: IDataObject = {
+							source_id: sourceId,
+							MoveForm: {
+								destId,
+							},
+							selection,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`/cfiels/items/container/${id}/move`,
+							body,
+						);
 
 					} else if (operation === 'deleteFromFolder') {
 
@@ -1644,7 +1975,19 @@ export class HumHub implements INodeType {
 						//             cFile:deleteFromFolder
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+						const selection = this.getNodeParameter('selection', i) as string;
 
+						const body: IDataObject = {
+							selection,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/cfiels/items/container/${id}/delete`,
+							body,
+						);
 					}
 
 				} else if (resource === 'task') {
@@ -1654,6 +1997,27 @@ export class HumHub implements INodeType {
 						//             task:getAll
 						// ----------------------------------------
 
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/tasks`,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/tasks`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'getAllByContainer') {
 
@@ -1661,6 +2025,29 @@ export class HumHub implements INodeType {
 						//             task:getAllByContainer
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/tasks/container/${id}`,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/tasks/container/${id}`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'deleteAllByContainer') {
 
@@ -1668,6 +2055,13 @@ export class HumHub implements INodeType {
 						//             task:deleteAllByContainer
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/tasks/container/${id}`,
+						);
 
 					} else if (operation === 'create') {
 
@@ -1675,6 +2069,52 @@ export class HumHub implements INodeType {
 						//             task:create
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const title = this.getNodeParameter('taskTitle', i) as string;
+						const task: IDataObject = {
+							title,
+						};
+						const taskAdditionalFields = this.getNodeParameter('taskAdditionalFields', i) as IDataObject;
+						Object.assign(task, taskAdditionalFields);
+
+						const isPublic = this.getNodeParameter('is_public', i) as string;
+						const startDate = this.getNodeParameter('start_date', i) as string;
+						const startTime = this.getNodeParameter('start_time', i) as string;
+						const endDate = this.getNodeParameter('end_date', i) as string;
+						const endTime = this.getNodeParameter('end_time', i) as string;
+						const timeZone = this.getNodeParameter('timeZone', i) as string;
+						const newItems = this.getNodeParameter('newItems', i) as string;
+						const taskForm: IDataObject = {
+							is_public: isPublic,
+							start_date: startDate,
+							start_time: startTime,
+							end_date: endDate,
+							end_time: endTime,
+							timeZone,
+							newItems,
+						};
+
+						// const startDate = this.getNodeParameter('start_date', i) as string;
+						// const endDate = this.getNodeParameter('end_date', i) as string;
+						// const taskForm: IDataObject = {
+						// 	start_date: startDate,
+						// 	end_date: endDate,
+						// };
+						// const taskFormAdditionalFields = this.getNodeParameter('taskFormAdditionalFields', i) as IDataObject;
+						// Object.assign(taskForm, taskFormAdditionalFields);
+
+						const body: IDataObject = {
+							Task: task,
+							TaskForm: taskForm,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`/tasks/container/${id}`,
+							body,
+						);
 
 					} else if (operation === 'get') {
 
@@ -1682,6 +2122,13 @@ export class HumHub implements INodeType {
 						//             task:get
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'GET',
+							`/tasks/task/${id}`,
+						);
 
 					} else if (operation === 'update') {
 
@@ -1689,6 +2136,22 @@ export class HumHub implements INodeType {
 						//             task:update
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const task = this.getNodeParameter('task', i) as IDataObject;
+						const taskForm = this.getNodeParameter('taskForm', i) as IDataObject;
+
+						const body: IDataObject = {
+							Task: task,
+							TaskForm: taskForm,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PUT',
+							`/tasks/task/${id}`,
+							body,
+						);
 
 					} else if (operation === 'delete') {
 
@@ -1696,6 +2159,13 @@ export class HumHub implements INodeType {
 						//             task:delete
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/tasks/task/${id}`,
+						);
 
 					} else if (operation === 'changeStatus') {
 
@@ -1703,6 +2173,19 @@ export class HumHub implements INodeType {
 						//             task:changeStatus
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+						const title = this.getNodeParameter('title', i) as number;
+
+						const body: IDataObject = {
+							title,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PATCH',
+							`/tasks/task/${id}/proceed`,
+							body,
+						);
 
 					} else if (operation === 'revert') {
 
@@ -1710,6 +2193,19 @@ export class HumHub implements INodeType {
 						//             task:revert
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+						const title = this.getNodeParameter('title', i) as number;
+
+						const body: IDataObject = {
+							title,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PATCH',
+							`/tasks/task/${id}/revert`,
+							body,
+						);
 
 					} else if (operation === 'attachFiles') {
 
@@ -1717,6 +2213,19 @@ export class HumHub implements INodeType {
 						//             task:attachFiles
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+						const files = this.getNodeParameter('files', i) as string; //todo array of file
+
+						const body: IDataObject = {
+							files,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`/tasks/task/${id}/upload-files`,
+							body,
+						);
 
 					} else if (operation === 'removeFile') {
 
@@ -1724,7 +2233,14 @@ export class HumHub implements INodeType {
 						//             task:removeFile
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+						const fileId = this.getNodeParameter('fileId', i) as string;
 
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/tasks/task/${id}/remove-file/${fileId}`,
+						);
 					}
 
 				} else if (resource === 'taskList') {
@@ -1734,6 +2250,29 @@ export class HumHub implements INodeType {
 						//             taskList:getAll
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/tasks/lists/container/${id}`,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/tasks/lists/container/${id}`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'create') {
 
@@ -1741,6 +2280,28 @@ export class HumHub implements INodeType {
 						//             taskList:create
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const name = this.getNodeParameter('name', i) as string;
+						const color = this.getNodeParameter('color', i) as string;
+						const hideIfCompleted = this.getNodeParameter('hide_if_completed', i) as number;
+
+						const body: IDataObject = {
+							TaskList: {
+								name,
+								color
+							},
+							TaskListSettings: {
+								hide_if_completed: hideIfCompleted,
+							},
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`/tasks/lists/container/${id}`,
+							body,
+						);
 
 					} else if (operation === 'get') {
 
@@ -1748,6 +2309,13 @@ export class HumHub implements INodeType {
 						//             taskList:get
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'GET',
+							`/tasks/list/${id}`,
+						);
 
 					} else if (operation === 'update') {
 
@@ -1755,6 +2323,28 @@ export class HumHub implements INodeType {
 						//             taskList:update
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const name = this.getNodeParameter('name', i) as string;
+						const color = this.getNodeParameter('color', i) as string;
+						const hideIfCompleted = this.getNodeParameter('hide_if_completed', i) as number;
+
+						const body: IDataObject = {
+							TaskList: {
+								name,
+								color
+							},
+							TaskListSettings: {
+								hide_if_completed: hideIfCompleted,
+							},
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PUT',
+							`/tasks/list/${id}`,
+							body,
+						);
 
 					} else if (operation === 'delete') {
 
@@ -1762,7 +2352,13 @@ export class HumHub implements INodeType {
 						//             taskList:delete
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
 
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/tasks/list/${id}`,
+						);
 					}
 
 				} else if (resource === 'wikiPage') {
@@ -1772,6 +2368,27 @@ export class HumHub implements INodeType {
 						//             wikiPage:getAll
 						// ----------------------------------------
 
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/wiki`,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/wiki`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'getAllByContainer') {
 
@@ -1779,6 +2396,33 @@ export class HumHub implements INodeType {
 						//             wikiPage:getAllByContainer
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+						const topics = this.getNodeParameter('topics', i) as string;
+						qs.topics = topics;
+
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/wiki/container/${id}`,
+								undefined,
+								qs,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/wiki/container/${id}`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'deleteByContainer') {
 
@@ -1786,6 +2430,13 @@ export class HumHub implements INodeType {
 						//             wikiPage:deleteByContainer
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/wiki/container/${id}`,
+						);
 
 					} else if (operation === 'create') {
 
@@ -1793,6 +2444,33 @@ export class HumHub implements INodeType {
 						//             wikiPage:create
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const wikiPageTitle = this.getNodeParameter('wikiPageTitle', i) as string;
+						const wikiPage: IDataObject = {
+							title: wikiPageTitle,
+						};
+						const wikiPageAdditionalFields = this.getNodeParameter('wikiPageAdditionalFields', i) as IDataObject;
+						Object.assign(wikiPage, wikiPageAdditionalFields);
+
+						const revisionContent = this.getNodeParameter('revisionContent', i) as string;
+
+						const pageEditForm = this.getNodeParameter('pageEditForm', i) as IDataObject; //todo array of integers
+
+						const body: IDataObject = {
+							WikiPage: wikiPage,
+							WikiPageRevision: {
+								content: revisionContent,
+							},
+							PageEditForm: pageEditForm,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`/wiki/container/${id}`,
+							body,
+						);
 
 					} else if (operation === 'get') {
 
@@ -1800,6 +2478,13 @@ export class HumHub implements INodeType {
 						//             wikiPage:get
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'GET',
+							`/wiki/page/${id}`,
+						);
 
 					} else if (operation === 'update') {
 
@@ -1807,6 +2492,24 @@ export class HumHub implements INodeType {
 						//             wikiPage:update
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const wikiPage = this.getNodeParameter('wikiPage', i) as IDataObject;
+						const wikiPageRevision = this.getNodeParameter('wikiPageRevision', i) as IDataObject;
+						const pageEditForm = this.getNodeParameter('pageEditForm', i) as IDataObject; //todo array of integers
+
+						const body: IDataObject = {
+							WikiPage: wikiPage,
+							WikiPageRevision: wikiPageRevision,
+							PageEditForm: pageEditForm,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PUT',
+							`/wiki/page/${id}`,
+							body,
+						);
 
 					} else if (operation === 'delete') {
 
@@ -1814,6 +2517,13 @@ export class HumHub implements INodeType {
 						//             wikiPage:delete
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/wiki/page/${id}`,
+						);
 
 					} else if (operation === 'moveToCategory') {
 
@@ -1821,6 +2531,22 @@ export class HumHub implements INodeType {
 						//             wikiPage:moveToCategory
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const targetId = this.getNodeParameter('target_id', i) as number;
+						const index = this.getNodeParameter('index', i) as number;
+
+						const body: IDataObject = {
+							target_id: targetId,
+							index,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PATCH',
+							`/wiki/page/${id}/change-index`,
+							body,
+						);
 
 					} else if (operation === 'moveToSpace') {
 
@@ -1828,6 +2554,20 @@ export class HumHub implements INodeType {
 						//             wikiPage:moveToSpace
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						const target = this.getNodeParameter('target', i) as string;
+
+						const body: IDataObject = {
+							target,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PATCH',
+							`/wiki/page/${id}/move`,
+							body,
+						);
 
 					}
 
@@ -1838,6 +2578,29 @@ export class HumHub implements INodeType {
 						//             wikiPageRevision:getAll
 						// ----------------------------------------
 
+						const pageId = this.getNodeParameter('pageId', i) as number;
+
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/wiki/page/${pageId}/revisions`,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/wiki/page/${pageId}/revisions`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'get') {
 
@@ -1845,6 +2608,13 @@ export class HumHub implements INodeType {
 						//             wikiPageRevision:get
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'GET',
+							`/wiki/revision/${id}`,
+						);
 
 					} else if (operation === 'revert') {
 
@@ -1852,7 +2622,13 @@ export class HumHub implements INodeType {
 						//             wikiPageRevision:revert
 						// ----------------------------------------
 
+						const id = this.getNodeParameter('id', i) as number;
 
+						responseData = await humhubApiRequest.call(
+							this,
+							'PATCH',
+							`/wiki/revision/${id}/revert`,
+						);
 					}
 
 				} else if (resource === 'mailConversation') {
@@ -1862,6 +2638,27 @@ export class HumHub implements INodeType {
 						//             mailConversation:getAll
 						// ----------------------------------------
 
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/mail`,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/mail`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'create') {
 
@@ -1869,6 +2666,24 @@ export class HumHub implements INodeType {
 						//             mailConversation:create
 						// ----------------------------------------
 
+						 const title = this.getNodeParameter('title', i) as string;
+						 const message = this.getNodeParameter('message', i) as string;
+
+						 const recipientStr = this.getNodeParameter('recipient', i) as string;
+						 const recipient = recipientStr.split(',');
+
+						 const body: IDataObject = {
+							title,
+							message,
+							recipient,
+						 };
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`/mail`,
+							body,
+						);
 
 					} else if (operation === 'get') {
 
@@ -1876,7 +2691,13 @@ export class HumHub implements INodeType {
 						//             mailConversation:get
 						// ----------------------------------------
 
+						const messageId = this.getNodeParameter('messageId', i) as number;
 
+						responseData = await humhubApiRequest.call(
+							this,
+							'GET',
+							`/mail/${messageId}`,
+						);
 					}
 
 				} else if (resource === 'mailEntry') {
@@ -1886,6 +2707,29 @@ export class HumHub implements INodeType {
 						//             mailEntry:getAll
 						// ----------------------------------------
 
+						const messageId = this.getNodeParameter('messageId', i) as number;
+
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/mail/${messageId}/entries`,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/mail/${messageId}/entries`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'create') {
 
@@ -1893,6 +2737,20 @@ export class HumHub implements INodeType {
 						//             mailEntry:create
 						// ----------------------------------------
 
+						const messageId = this.getNodeParameter('messageId', i) as number;
+
+						const message = this.getNodeParameter('message', i) as string;
+
+						const body: IDataObject = {
+							message,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`/mail/${messageId}/entry`,
+							body,
+						);
 
 					} else if (operation === 'get') {
 
@@ -1900,6 +2758,14 @@ export class HumHub implements INodeType {
 						//             mailEntry:get
 						// ----------------------------------------
 
+						const messageId = this.getNodeParameter('messageId', i) as number;
+						const entryId = this.getNodeParameter('entryId', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'GET',
+							`/mail/${messageId}/entry/${entryId}`,
+						);
 
 					} else if (operation === 'update') {
 
@@ -1907,6 +2773,21 @@ export class HumHub implements INodeType {
 						//             mailEntry:update
 						// ----------------------------------------
 
+						const messageId = this.getNodeParameter('messageId', i) as number;
+						const entryId = this.getNodeParameter('entryId', i) as number;
+
+						const content = this.getNodeParameter('content', i) as string;
+
+						const body: IDataObject = {
+							content,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PUT',
+							`/mail/${messageId}/entry/${entryId}`,
+							body,
+						);
 
 					} else if (operation === 'delete') {
 
@@ -1914,7 +2795,14 @@ export class HumHub implements INodeType {
 						//             mailEntry:delete
 						// ----------------------------------------
 
+						const messageId = this.getNodeParameter('messageId', i) as number;
+						const entryId = this.getNodeParameter('entryId', i) as number;
 
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/mail/${messageId}/entry/${entryId}`,
+						);
 					}
 
 				} else if (resource === 'mailRecipient') {
@@ -1924,6 +2812,29 @@ export class HumHub implements INodeType {
 						//             mailRecipient:getAll
 						// ----------------------------------------
 
+						const messageId = this.getNodeParameter('messageId', i) as number;
+
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/mail/${messageId}/users`,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/mail/${messageId}/users`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'add') {
 
@@ -1931,6 +2842,14 @@ export class HumHub implements INodeType {
 						//             mailRecipient:add
 						// ----------------------------------------
 
+						const messageId = this.getNodeParameter('messageId', i) as number;
+						const userId = this.getNodeParameter('userId', i) as number;
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`/mail/${messageId}/user/${userId}`,
+						);
 
 					} else if (operation === 'remove') {
 
@@ -1938,7 +2857,14 @@ export class HumHub implements INodeType {
 						//             mailRecipient:remove
 						// ----------------------------------------
 
+						const messageId = this.getNodeParameter('messageId', i) as number;
+						const userId = this.getNodeParameter('userId', i) as number;
 
+						responseData = await humhubApiRequest.call(
+							this,
+							'DELETE',
+							`/mail/${messageId}/user/${userId}`,
+						);
 					}
 
 				} else if (resource === 'mailTag') {
@@ -1948,6 +2874,29 @@ export class HumHub implements INodeType {
 						//             mailTag:getAll
 						// ----------------------------------------
 
+						const messageId = this.getNodeParameter('messageId', i) as number;
+
+						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+						if (returnAll) {
+							responseData = await humhubApiRequestAllItems.call(
+								this,
+								'results',
+								'GET',
+								`/mail/${messageId}/tags`,
+							);
+						} else {
+							// get additional fields input for limit and page
+							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+							Object.assign(qs, additionalFields);
+
+							responseData = await humhubApiRequest.call(
+								this,
+								'GET',
+								`/mail/${messageId}/tags`,
+								undefined,
+								qs,
+							);
+						}
 
 					} else if (operation === 'update') {
 
@@ -1955,9 +2904,22 @@ export class HumHub implements INodeType {
 						//             mailTag:update
 						// ----------------------------------------
 
+						const messageId = this.getNodeParameter('messageId', i) as number;
+						
+						const tagsStr = this.getNodeParameter('tags', i) as string;
+						 const tags = tagsStr.split(',');
 
+						const body: IDataObject = {
+							tags,
+						};
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'PUT',
+							`/mail/${messageId}/tags`,
+							body,
+						);
 					}
-
 				}
 
 				if (Array.isArray(responseData)) {

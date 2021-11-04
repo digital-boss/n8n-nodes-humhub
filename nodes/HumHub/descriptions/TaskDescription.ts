@@ -167,10 +167,27 @@ export const  taskFields = [
 		default: '',
 		description: 'The id of content container.',
 	},
-
     {
-        displayName: 'Task',
-        name: 'Task',
+        displayName: 'Task Title',
+        name: 'taskTitle',
+        type: 'string',
+        displayOptions: {
+			show: {
+				resource: [
+					'task',
+				],
+				operation: [
+					'create',
+				],
+			},
+		},
+        required: true,
+        default: '',
+        description: '',
+    },
+    {
+        displayName: 'Task Additional Fields',
+        name: 'taskAdditionalFields',
         type: 'collection',
         required: true,
         displayOptions: {
@@ -186,14 +203,6 @@ export const  taskFields = [
         default: [],
         description: '',
         options: [
-            {
-                displayName: 'Title',
-                name: 'title',
-                type: 'string',
-                required: true,
-                default: '',
-                description: '',
-            },
             {
                 displayName: 'Description',
                 name: 'description',
@@ -259,11 +268,13 @@ export const  taskFields = [
             },
         ],
     },
-	{
-        displayName: 'Task Form',
-        name: 'TaskForm',
-        type: 'collection',
-        required: true,
+    {
+        displayName: 'Is Public',
+        name: 'is_public',
+        type: 'number',
+        typeOptions: {
+            numberStepSize: 1,
+        },
         displayOptions: {
             show: {
 				resource: [
@@ -274,57 +285,182 @@ export const  taskFields = [
 				],
             },
         },
-        default: [],
+        default: '',
         description: '',
-        options: [
-            {
-                displayName: 'Is Public',
-                name: 'is_public',
-                type: 'number',
-                default: '',
-                description: '',
-            },
-            {
-                displayName: 'Start Date',
-                name: 'start_date',
-                type: 'string',
-                required: true,
-                default: '',
-                description: 'Required if Task scheduling param is set.',
-            },
-            {
-                displayName: 'Start Time',
-                name: 'start_time',
-                type: 'string',
-                required: true,
-                default: '',
-                description: 'Required if Task scheduling param is set and Task all_day param isn\'t set.',
-            },
-            {
-                displayName: 'End Date',
-                name: 'end_date',
-                type: 'string',
-                required: true,
-                default: '',
-                description: 'Required if Task scheduling param is set.',
-            },
-            {
-                displayName: 'End Time',
-                name: 'end_time',
-                type: 'string',
-                required: true,
-                default: '',
-                description: 'Required if Task scheduling param is set and Task all_day param isn\'t set.',
-            },
-            {
-                displayName: 'newItems',
-                name: 'newItems',
-                type: 'string',
-                default: '',
-                description: 'Checklist items.', // todo Array of strings
-            },
-        ],
     },
+    {
+        displayName: 'Start Date',
+        name: 'start_date',
+        type: 'string',
+        // required: true,
+        displayOptions: {
+            show: {
+				resource: [
+					'task',
+				],
+				operation: [
+					'create',
+				],
+            },
+        },
+        default: '',
+        description: 'Required if Task scheduling param is set.',
+    },
+    {
+        displayName: 'Start Time',
+        name: 'start_time',
+        type: 'string',
+        displayOptions: {
+            show: {
+				resource: [
+					'task',
+				],
+				operation: [
+					'create',
+				],
+            },
+        },
+        default: '',
+        description: 'Required if Task scheduling param is set and Task all_day param isn\'t set.',
+    },
+    {
+        displayName: 'End Date',
+        name: 'end_date',
+        type: 'string',
+        // required: true, //todo
+        displayOptions: {
+            show: {
+				resource: [
+					'task',
+				],
+				operation: [
+					'create',
+				],
+            },
+        },
+        default: '',
+        description: 'Required if Task scheduling param is set.',
+    },
+    {
+        displayName: 'End Time',
+        name: 'end_time',
+        type: 'string',
+        displayOptions: {
+            show: {
+				resource: [
+					'task',
+				],
+				operation: [
+					'create',
+				],
+            },
+        },
+        default: '',
+        description: 'Required if Task scheduling param is set and Task all_day param isn\'t set.',
+    },
+    {
+        displayName: 'Time Zone',
+        name: 'timeZone',
+        type: 'string',
+        displayOptions: {
+            show: {
+				resource: [
+					'task',
+				],
+				operation: [
+					'create',
+				],
+            },
+        },
+        default: '',
+        description: '',
+    },
+    {
+        displayName: 'New Items',
+        name: 'newItems',
+        type: 'string',
+        displayOptions: {
+            show: {
+				resource: [
+					'task',
+				],
+				operation: [
+					'create',
+				],
+            },
+        },
+        default: '',
+        description: 'Checklist items.', // todo Array of strings
+    },
+	// {
+    //     displayName: 'Task Form',
+    //     name: 'taskForm',
+    //     type: 'collection',
+    //     required: true,
+    //     displayOptions: {
+    //         show: {
+	// 			resource: [
+	// 				'task',
+	// 			],
+	// 			operation: [
+	// 				'create',
+	// 			],
+    //         },
+    //     },
+    //     default: [],
+    //     description: '',
+    //     options: [
+    //         {
+    //             displayName: 'Is Public',
+    //             name: 'is_public',
+    //             type: 'number',
+    //             default: '',
+    //             description: '',
+    //         },
+    //         {
+    //             displayName: 'Start Date',
+    //             name: 'start_date',
+    //             type: 'string',
+    //             default: '',
+    //             description: 'Required if Task scheduling param is set.',
+    //         },
+    //         {
+    //             displayName: 'Start Time',
+    //             name: 'start_time',
+    //             type: 'string',
+    //             default: '',
+    //             description: 'Required if Task scheduling param is set and Task all_day param isn\'t set.',
+    //         },
+    //         {
+    //             displayName: 'End Date',
+    //             name: 'end_date',
+    //             type: 'string',
+    //             default: '',
+    //             description: 'Required if Task scheduling param is set.',
+    //         },
+    //         {
+    //             displayName: 'End Time',
+    //             name: 'end_time',
+    //             type: 'string',
+    //             default: '',
+    //             description: 'Required if Task scheduling param is set and Task all_day param isn\'t set.',
+    //         },
+    //         {
+    //             displayName: 'Time Zone',
+    //             name: 'timeZone',
+    //             type: 'string',
+    //             default: '',
+    //             description: '',
+    //         },
+    //         {
+    //             displayName: 'New Items',
+    //             name: 'newItems',
+    //             type: 'string',
+    //             default: '',
+    //             description: 'Checklist items.', // todo Array of strings
+    //         },
+    //     ],
+    // },
 
 	/* -------------------------------------------------------------------------- */
 	/*                                 task:get                                   */
@@ -377,12 +513,10 @@ export const  taskFields = [
 		default: '',
 		description: 'The id of the task.',
 	},
-
 	{
         displayName: 'Task',
-        name: 'Task',
+        name: 'task',
         type: 'collection',
-        required: true,
         displayOptions: {
             show: {
 				resource: [
@@ -400,7 +534,6 @@ export const  taskFields = [
                 displayName: 'Title',
                 name: 'title',
                 type: 'string',
-                required: true,
                 default: '',
                 description: '',
             },
@@ -471,9 +604,8 @@ export const  taskFields = [
     },
 	{
         displayName: 'Task Form',
-        name: 'TaskForm',
+        name: 'taskForm',
         type: 'collection',
-        required: true,
         displayOptions: {
             show: {
 				resource: [
@@ -498,7 +630,6 @@ export const  taskFields = [
                 displayName: 'Start Date',
                 name: 'start_date',
                 type: 'string',
-                required: true,
                 default: '',
                 description: 'Required if Task scheduling param is set.',
             },
@@ -506,7 +637,6 @@ export const  taskFields = [
                 displayName: 'Start Time',
                 name: 'start_time',
                 type: 'string',
-                required: true,
                 default: '',
                 description: 'Required if Task scheduling param is set and Task all_day param isn\'t set.',
             },
@@ -514,7 +644,6 @@ export const  taskFields = [
                 displayName: 'End Date',
                 name: 'end_date',
                 type: 'string',
-                required: true,
                 default: '',
                 description: 'Required if Task scheduling param is set.',
             },
@@ -522,7 +651,6 @@ export const  taskFields = [
                 displayName: 'End Time',
                 name: 'end_time',
                 type: 'string',
-                required: true,
                 default: '',
                 description: 'Required if Task scheduling param is set and Task all_day param isn\'t set.',
             },

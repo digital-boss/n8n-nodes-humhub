@@ -123,7 +123,7 @@ export const  calendarFields = [
 			},
 		},
 		default: '',
-		description: 'Coma separated list of topics to filter. Example: topics=Music,Dancing',
+		description: 'Comma separated list of topics to filter. Example: Music,Dancing',
 	},
 
     ...getPagingParameters('calendar', 'getAllByContainer'),
@@ -179,9 +179,28 @@ export const  calendarFields = [
 		default: '',
 		description: 'ID of the content container.',
 	},
+
+	{
+		displayName: 'Calendar Entry Title',
+		name: 'calendarEntryTitle',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: [
+					'calendar',
+				],
+				operation: [
+					'create',
+				],
+			},
+		},
+		default: '',
+		description: '',
+	},
     {
-		displayName: 'Calendar Entry',
-		name: 'CalendarEntry',
+		displayName: 'Calendar Entry Additional Fields',
+		name: 'calendarEntryAdditionalFields',
 		type: 'collection',
 		required: true,
 		displayOptions: {
@@ -197,14 +216,6 @@ export const  calendarFields = [
 		default: [],
 		description: '',
 		options: [
-			{
-				displayName: 'Title',
-				name: 'title',
-				type: 'string',
-                required: true,
-				default: '',
-				description: '',
-			},
 			{
 				displayName: 'Description',
 				name: 'Description',
@@ -263,9 +274,45 @@ export const  calendarFields = [
 			},
 		],
 	},
+	{
+		displayName: 'Calendar Entry Form Start Date',
+		name: 'calendarEntryFormStartDate',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: [
+					'calendar',
+				],
+				operation: [
+					'create',
+				],
+			},
+		},
+		default: '',
+		description: '',
+	},
+	{
+		displayName: 'Calendar Entry Form End Date',
+		name: 'calendarEntryFormEndDate',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: [
+					'calendar',
+				],
+				operation: [
+					'create',
+				],
+			},
+		},
+		default: '',
+		description: '',
+	},
     {
-		displayName: 'Calendar Entry Form',
-		name: 'CalendarEntryForm',
+		displayName: 'Calendar Entry Form Additional Fields',
+		name: 'calendarEntryFormAdditionalFields',
 		type: 'collection',
 		required: true,
 		displayOptions: {
@@ -288,26 +335,11 @@ export const  calendarFields = [
 				default: '',
 				description: '',
 			},
-			{
-				displayName: 'Start Date',
-				name: 'start_date',
-				type: 'string',
-                required: true,
-				default: '',
-				description: '',
-			},
+
 			{
 				displayName: 'Start Time',
 				name: 'start_time',
 				type: 'string',
-				default: '',
-				description: '',
-			},
-			{
-				displayName: 'End Date',
-				name: 'end_date',
-				type: 'string',
-                required: true,
 				default: '',
 				description: '',
 			},
@@ -338,7 +370,7 @@ export const  calendarFields = [
 				type: 'string',
 				default: '',
 				description: '',
-			},// todo Array of integers <int64>
+			}, // todo Array of integers <int64>
 		],
 	},
 
@@ -395,7 +427,7 @@ export const  calendarFields = [
 	},
     {
 		displayName: 'Calendar Entry',
-		name: 'CalendarEntry',
+		name: 'calendarEntry',
 		type: 'collection',
 		required: true,
 		displayOptions: {
@@ -478,7 +510,7 @@ export const  calendarFields = [
 	},
     {
 		displayName: 'Calendar Entry Form',
-		name: 'CalendarEntryForm',
+		name: 'calendarEntryForm',
 		type: 'collection',
 		required: true,
 		displayOptions: {
@@ -549,7 +581,7 @@ export const  calendarFields = [
 				type: 'string',
 				default: '',
 				description: '',
-			},// todo Array of integers <int64>
+			}, // todo Array of integers <int64>
 		],
 	},
 
@@ -620,7 +652,7 @@ export const  calendarFields = [
 			},
 		},
 		default: '',
-		description: 'The files to upload.', //todo Array of file?
+		description: 'The files to upload.', // todo Array of file?
 	},
 
     /* -------------------------------------------------------------------------- */

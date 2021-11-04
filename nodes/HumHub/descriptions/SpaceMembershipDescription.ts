@@ -246,6 +246,8 @@ export const spaceMembershipFields = [
 				],
 			},
 		},
+		default: 'member',
+		description: '',
 		options: [
 			{
 				name: 'Member',
@@ -260,8 +262,6 @@ export const spaceMembershipFields = [
 				value: 'admin',
 			},
 		],
-		default: 'member',
-		description: '',
 	},
 
 ] as INodeProperties[];
