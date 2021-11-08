@@ -89,7 +89,7 @@ export const  mailConversationFields = [
 		description: 'First entry content.',
 	},
 	{
-		displayName: 'Recipient',
+		displayName: 'Recipients',
 		name: 'recipient',
 		type: 'string',
 		required: true,

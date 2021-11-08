@@ -13,7 +13,9 @@ export * from './SpaceMembershipDescription';
 export * from './TopicDescription';
 
 export * from './CalendarDescription';
+export * from './CFileDirectoryDescription';
 export * from './CFileDescription';
+export * from './CFileItemManagementDescription';
 export * from './TaskDescription';
 export * from './TaskListDescription';
 export * from './WikiPageDescription';

@@ -19,31 +19,6 @@ export const cFileOperations = [
 			},
 		},
 		options: [
-			{
-				name: 'Get All Directories',
-				value: 'getAllDirectories',
-				description: 'Find all folders by content container',
-			},
-			{
-				name: 'Create Directory',
-				value: 'createDirectory',
-				description: 'Create new directory',
-			},
-			{
-				name: 'Get Directory',
-				value: 'getDirectory',
-				description: 'Get directory by id',
-			},
-			{
-				name: 'Update Directory',
-				value: 'updateDirectory',
-				description: 'Update directory by id',
-			},
-			{
-				name: 'Delete Directory',
-				value: 'deleteDirectory',
-				description: 'Delete a directory by id',
-			},
             {
 				name: 'Get All',
 				value: 'getAll',
@@ -64,26 +39,6 @@ export const cFileOperations = [
 				value: 'delete',
 				description: 'Deletes a file by id',
 			},
-			{
-				name: 'Make Public',
-				value: 'makePublic',
-				description: 'Make items public',
-			},
-			{
-				name: 'Make Private',
-				value: 'makePrivate',
-				description: 'Make items private',
-			},
-			{
-				name: 'Move To Folder',
-				value: 'moveToFolder',
-				description: 'Move items to another folder',
-			},
-			{
-				name: 'Delete From Folder',
-				value: 'deleteFromFolder',
-				description: 'Delete items from folder',
-			},
 		],
 		default: 'getAllDirectories',
 		description: 'The operation to perform.',
@@ -91,272 +46,6 @@ export const cFileOperations = [
 ] as INodeProperties[];
 
 export const  cFileFields = [
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 cFile:getAllDirectories                    */
-	/* -------------------------------------------------------------------------- */
-
-	{
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'getAllDirectories',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of content container.',
-	},
-    ...getPagingParameters('cFile', 'getAllDirectories'),
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 cFile:createDirectory                      */
-	/* -------------------------------------------------------------------------- */
-
-	{
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'createDirectory',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of content container.',
-	},
-	{
-		displayName: 'Target ID',
-		name: 'targetId',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'createDirectory',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of the target directory.',
-	},
-	{
-		displayName: 'Title',
-		name: 'title',
-		type: 'string',
-		required: true,
-        displayOptions: {
-            show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'createDirectory',
-				],
-            },
-        },
-		default: '',
-		description: '',
-	},
-	{
-		displayName: 'Folder Additional Fields',
-		name: 'folderAdditionalFields',
-		type: 'collection',
-		required: true,
-
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'createDirectory',
-				],
-			},
-		},
-		default: [],
-		description: '',
-		options: [
-			{
-				displayName: 'Description',
-				name: 'Description',
-				type: 'string',
-				default: '',
-				description: '',
-			},
-			{
-				displayName: 'Visibility',
-				name: 'visibility',
-				type: 'number',
-				default: '',
-				description: 'Allowed visibility statuses: 0 - Private; 1 - Public',
-			},
-		],
-	},
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 cFile:getDirectory                         */
-	/* -------------------------------------------------------------------------- */
-
-    {
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'getDirectory',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of the directory.',
-	},
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 cFile:updateDirectory                      */
-	/* -------------------------------------------------------------------------- */
-
-	{
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'updateDirectory',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of the directory.',
-	},
-	{
-		displayName: 'Target ID',
-		name: 'targetId',
-		type: 'number',
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'updateDirectory',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of the target directory',
-	},
-	{
-		displayName: 'Folder',
-		name: 'folder',
-		type: 'collection',
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'updateDirectory',
-				],
-			},
-		},
-		default: [],
-		description: '',
-		options: [
-			{
-				displayName: 'Title',
-				name: 'title',
-				type: 'string',
-				default: '',
-				description: '',
-			},
-			{
-				displayName: 'Description',
-				name: 'Description',
-				type: 'string',
-				default: '',
-				description: '',
-			},
-			{
-				displayName: 'Visibility',
-				name: 'visibility',
-				type: 'number',
-				default: '',
-				description: 'Allowed visibility statuses: 0 - Private; 1 - Public',
-			},
-		],
-	},
-
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 cFile:deleteDirectory                      */
-	/* -------------------------------------------------------------------------- */
-
-	{
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'deleteDirectory',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of the directory.',
-	},
 
 	/* -------------------------------------------------------------------------- */
 	/*                                 cFile:getAll                               */
@@ -431,10 +120,12 @@ export const  cFileFields = [
 		default: '',
 		description: 'Id of the directory.',
 	},
+
 	{
-		displayName: 'Files',
-		name: 'files',
-		type: 'string',
+		displayName: 'Binary Data',
+		name: 'binaryDataUpload',
+		type: 'boolean',
+		default: false,
 		required: true,
 		displayOptions: {
 			show: {
@@ -446,9 +137,52 @@ export const  cFileFields = [
 				],
 			},
 		},
+		description: '',
+	},
+	{
+		displayName: 'File Content',
+		name: 'fileContent',
+		type: 'string',
 		default: '',
-		description: 'The files to upload.',
-	}, // todo Array of file
+		displayOptions: {
+			show: {
+				resource: [
+					'cFile',
+				],
+				operation: [
+					'upload',
+				],
+				binaryDataUpload: [
+					false,
+				],
+			},
+		},
+		placeholder: '',
+		description: 'The text content of the file to upload.',
+	},
+	{
+		displayName: 'Binary Property',
+		name: 'binaryPropertyName',
+		type: 'string',
+		default: 'data',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: [
+					'cFile',
+				],
+				operation: [
+					'upload',
+				],
+				binaryDataUpload: [
+					true,
+				],
+			},
+		},
+		placeholder: '',
+		description: 'Name of the binary property which contains the data for the file to be uploaded.',
+	},
+
 
 	/* -------------------------------------------------------------------------- */
 	/*                                 cFile:get                              	  */
@@ -500,236 +234,6 @@ export const  cFileFields = [
 		},
 		default: '',
 		description: 'The id of the file.',
-	},
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 cFile:makePublic                           */
-	/* -------------------------------------------------------------------------- */
-
-    {
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'makePublic',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of content container.',
-	},
-    {
-		displayName: 'Selection',
-		name: 'selection',
-		type: 'string',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'makePublic',
-				],
-			},
-		},
-		default: '',
-		description: 'Item id in format {type}_{id}.',//todo
-	},
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 cFile:makePrivate                          */
-	/* -------------------------------------------------------------------------- */
-
-    {
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'makePrivate',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of content container.',
-	},
-    {
-		displayName: 'Selection',
-		name: 'selection',
-		type: 'string',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'makePrivate',
-				],
-			},
-		},
-		default: '',
-		description: 'Item id in format {type}_{id}.',//todo
-	},
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 cFile:moveToFolder                         */
-	/* -------------------------------------------------------------------------- */
-
-    {
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'moveToFolder',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of content container.',
-	},
-    {
-		displayName: 'Source ID',
-		name: 'source_id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'moveToFolder',
-				],
-			},
-		},
-		default: '',
-		description: '',
-	},
-    {
-		displayName: 'Destination ID',
-		name: 'destId',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'moveToFolder',
-				],
-			},
-		},
-		default: '',
-		description: '',
-	},
-    {
-		displayName: 'Selection',
-		name: 'selection',
-		type: 'string',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'moveToFolder',
-				],
-			},
-		},
-		default: '',
-		description: 'Item id in format {type}_{id}.',//todo
-	},
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 cFile:deleteFromFolder                     */
-	/* -------------------------------------------------------------------------- */
-
-	{
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'comment',
-				],
-				operation: [
-					'deleteFromFolder',
-				],
-			},
-		},
-		default: '',
-		description: 'The ID of comment.',
-	},
-    {
-		displayName: 'Selection',
-		name: 'selection',
-		type: 'string',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'deleteFromFolder',
-				],
-			},
-		},
-		default: '',
-		description: 'Item id in format {type}_{id}.',//todo
 	},
 
 ] as INodeProperties[];

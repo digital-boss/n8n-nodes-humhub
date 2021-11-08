@@ -51,8 +51,8 @@ export const spaceOperations = [
 			},
 			{
 				name: 'Unarchive',
-				value: 'unarchive ',
-				description: 'Unarchive the space by id',
+				value: 'unarchive',
+				description: 'Archive the space by id',
 			},
 		],
 		default: 'getAll',

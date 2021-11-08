@@ -114,7 +114,7 @@ export const  likeFields = [
 			},
 		},
 		default: '',
-		description: 'The model record class.',
+		description: 'The model record class. Example: humhub\\\\modules\\\\post\\\\models\\\\Post',
 	},
     {
 		displayName: 'Primary Key',

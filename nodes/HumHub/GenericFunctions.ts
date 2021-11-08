@@ -16,7 +16,7 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 
-export async function humhubApiRequest(this: IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions, method: string, resource: string, body: any = {}, qs: IDataObject = {}, uri?: string): Promise<any> { // tslint:disable-line:no-any
+export async function humhubApiRequest(this: IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions, method: string, resource: string, body: any = {}, qs: IDataObject = {}, uri?: string, encoding?: null | undefined): Promise<any> { // tslint:disable-line:no-any
 	// const authenticationMethod = this.getNodeParameter('authentication', 0, 'serviceAccount') as string;
 
 	// let authorization = '';
@@ -46,6 +46,10 @@ export async function humhubApiRequest(this: IExecuteFunctions | IExecuteSingleF
 
 	if (Object.keys(body).length === 0) {
 		delete options.body;
+	}
+
+	if (encoding === null) {
+		options.encoding = null;
 	}
 
 	try {

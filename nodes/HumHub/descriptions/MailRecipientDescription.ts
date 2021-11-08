@@ -115,7 +115,7 @@ export const  mailRecipientFields = [
 	/*                                 mailRecipient:remove                    */
 	/* -------------------------------------------------------------------------- */
 
-    {
+	{
 		displayName: 'Message ID',
 		name: 'messageId',
 		type: 'number',

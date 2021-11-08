@@ -53,5 +53,23 @@ export const  fileFields = [
 		default: '',
 		description: 'The ID of the file to download.',
 	},
+	{
+		displayName: 'Binary Property',
+		name: 'binaryPropertyName',
+		type: 'string',
+		default: 'data',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: [
+					'file',
+				],
+				operation: [
+					'download',
+				],
+			},
+		},
+		description: 'Name of the binary property to which to write the data of the read file.',
+	},
 
 ] as INodeProperties[];

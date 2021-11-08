@@ -3,10 +3,10 @@ import {
 } from 'n8n-workflow';
 
 import {
-    getPagingParameters
+	getPagingParameters
 } from '../GenericFunctions';
 
-export const taskListOperations = [
+export const cFileDirectoryOperations = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -14,7 +14,7 @@ export const taskListOperations = [
 		displayOptions: {
 			show: {
 				resource: [
-					'taskList',
+					'cFileDirectory',
 				],
 			},
 		},
@@ -22,39 +22,38 @@ export const taskListOperations = [
 			{
 				name: 'Get All',
 				value: 'getAll',
-				description: 'Find all task lists by container',
+				description: 'Find all folders by content container',
 			},
 			{
 				name: 'Create',
 				value: 'create',
-				description: 'Create new task list',
+				description: 'Create new directory',
 			},
 			{
 				name: 'Get',
 				value: 'get',
-				description: 'Get task list by id',
+				description: 'Get directory by id',
 			},
 			{
 				name: 'Update',
 				value: 'update',
-				description: 'Update task list by id',
+				description: 'Update directory by id',
 			},
 			{
 				name: 'Delete',
 				value: 'delete',
-				description: 'Delete task list by id',
+				description: 'Delete a directory by id',
 			},
-
 		],
-		default: 'get',
+		default: 'getAll',
 		description: 'The operation to perform.',
 	},
 ] as INodeProperties[];
 
-export const  taskListFields = [
+export const  cFileDirectoryFields = [
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 taskList:getAll                             */
+	/*                                 cFileDirectory:getAll	                  */
 	/* -------------------------------------------------------------------------- */
 
 	{
@@ -68,7 +67,7 @@ export const  taskListFields = [
 		displayOptions: {
 			show: {
 				resource: [
-					'taskList',
+					'cFileDirectory',
 				],
 				operation: [
 					'getAll',
@@ -76,12 +75,12 @@ export const  taskListFields = [
 			},
 		},
 		default: '',
-		description: 'ID of content container.',
+		description: 'The id of content container.',
 	},
-    ...getPagingParameters('taskList'),
+    ...getPagingParameters('cFileDirectory'),
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 taskList:create                             */
+	/*                                 cFileDirectory:create                      */
 	/* -------------------------------------------------------------------------- */
 
 	{
@@ -95,7 +94,7 @@ export const  taskListFields = [
 		displayOptions: {
 			show: {
 				resource: [
-					'taskList',
+					'cFileDirectory',
 				],
 				operation: [
 					'create',
@@ -106,51 +105,17 @@ export const  taskListFields = [
 		description: 'The id of content container.',
 	},
 	{
-		displayName: 'Name',
-		name: 'name',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				resource: [
-					'taskList',
-				],
-				operation: [
-					'create',
-				],
-			},
-		},
-		default: '',
-		description: '',
-	},
-	{
-		displayName: 'Color',
-		name: 'color',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: [
-					'taskList',
-				],
-				operation: [
-					'create',
-				],
-			},
-		},
-		default: '',
-		description: '',
-	},
-	{
-		displayName: 'Hide If Completed',
-		name: 'hide_if_completed',
+		displayName: 'Target ID',
+		name: 'targetId',
 		type: 'number',
+		required: true,
         typeOptions: {
             numberStepSize: 1,
         },
 		displayOptions: {
 			show: {
 				resource: [
-					'taskList',
+					'cFileDirectory',
 				],
 				operation: [
 					'create',
@@ -158,12 +123,64 @@ export const  taskListFields = [
 			},
 		},
 		default: '',
+		description: 'The id of the target directory.',
+	},
+	{
+		displayName: 'Title',
+		name: 'title',
+		type: 'string',
+		required: true,
+        displayOptions: {
+            show: {
+				resource: [
+					'cFileDirectory',
+				],
+				operation: [
+					'create',
+				],
+            },
+        },
+		default: '',
 		description: '',
 	},
+	{
+		displayName: 'Folder Additional Fields',
+		name: 'folderAdditionalFields',
+		type: 'collection',
+		required: true,
 
+		displayOptions: {
+			show: {
+				resource: [
+					'cFileDirectory',
+				],
+				operation: [
+					'create',
+				],
+			},
+		},
+		default: [],
+		description: '',
+		options: [
+			{
+				displayName: 'Description',
+				name: 'Description',
+				type: 'string',
+				default: '',
+				description: '',
+			},
+			{
+				displayName: 'Visibility',
+				name: 'visibility',
+				type: 'number',
+				default: '',
+				description: 'Allowed visibility statuses: 0 - Private; 1 - Public',
+			},
+		],
+	},
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 taskList:get                             */
+	/*                                 cFileDirectory:get                         */
 	/* -------------------------------------------------------------------------- */
 
     {
@@ -177,7 +194,7 @@ export const  taskListFields = [
 		displayOptions: {
 			show: {
 				resource: [
-					'taskList',
+					'cFileDirectory',
 				],
 				operation: [
 					'get',
@@ -185,92 +202,11 @@ export const  taskListFields = [
 			},
 		},
 		default: '',
-		description: 'The id of the task list.',
+		description: 'The id of the directory.',
 	},
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 taskList:update                              */
-	/* -------------------------------------------------------------------------- */
-
-	{
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'taskList',
-				],
-				operation: [
-					'update',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of the task list.',
-	},
-	{
-		displayName: 'Name',
-		name: 'name',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				resource: [
-					'taskList',
-				],
-				operation: [
-					'update',
-				],
-			},
-		},
-		default: '',
-		description: '',
-	},
-	{
-		displayName: 'Color',
-		name: 'color',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: [
-					'taskList',
-				],
-				operation: [
-					'update',
-				],
-			},
-		},
-		default: '',
-		description: '',
-	},
-	{
-		displayName: 'Hide If Completed',
-		name: 'hide_if_completed',
-		type: 'number',
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'taskList',
-				],
-				operation: [
-					'update',
-				],
-			},
-		},
-		default: '',
-		description: '',
-	},
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 taskList:delete                              */
+	/*                                 cFileDirectory:update                      */
 	/* -------------------------------------------------------------------------- */
 
 	{
@@ -284,7 +220,94 @@ export const  taskListFields = [
 		displayOptions: {
 			show: {
 				resource: [
-					'taskList',
+					'cFileDirectory',
+				],
+				operation: [
+					'update',
+				],
+			},
+		},
+		default: '',
+		description: 'The id of the directory.',
+	},
+	{
+		displayName: 'Target ID',
+		name: 'targetId',
+		type: 'number',
+        typeOptions: {
+            numberStepSize: 1,
+        },
+		displayOptions: {
+			show: {
+				resource: [
+					'cFileDirectory',
+				],
+				operation: [
+					'update',
+				],
+			},
+		},
+		default: '',
+		description: 'The id of the target directory',
+	},
+	{
+		displayName: 'Folder',
+		name: 'folder',
+		type: 'collection',
+		displayOptions: {
+			show: {
+				resource: [
+					'cFileDirectory',
+				],
+				operation: [
+					'update',
+				],
+			},
+		},
+		default: [],
+		description: '',
+		options: [
+			{
+				displayName: 'Title',
+				name: 'title',
+				type: 'string',
+				default: '',
+				description: '',
+			},
+			{
+				displayName: 'Description',
+				name: 'Description',
+				type: 'string',
+				default: '',
+				description: '',
+			},
+			{
+				displayName: 'Visibility',
+				name: 'visibility',
+				type: 'number',
+				default: '',
+				description: 'Allowed visibility statuses: 0 - Private; 1 - Public',
+			},
+		],
+	},
+
+
+	/* -------------------------------------------------------------------------- */
+	/*                                 cFileDirectory:delete                      */
+	/* -------------------------------------------------------------------------- */
+
+	{
+		displayName: 'ID',
+		name: 'id',
+		type: 'number',
+		required: true,
+        typeOptions: {
+            numberStepSize: 1,
+        },
+		displayOptions: {
+			show: {
+				resource: [
+					'cFileDirectory',
 				],
 				operation: [
 					'delete',
@@ -292,7 +315,7 @@ export const  taskListFields = [
 			},
 		},
 		default: '',
-		description: 'The id of the task list.',
+		description: 'The id of the directory.',
 	},
 
 ] as INodeProperties[];

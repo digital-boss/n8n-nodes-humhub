@@ -55,13 +55,13 @@ export const wikiPageOperations = [
 				description: 'Delete a wiki page by id',
 			},
             {
-				name: 'Move To Category',
-				value: 'moveToCategory',
-				description: 'Move page to another category',
+				name: 'Change Index',
+				value: 'changeIndex',
+				description: 'Change page index',
 			},
             {
-				name: 'Move To Space',
-				value: 'moveToSpace',
+				name: 'Move',
+				value: 'move',
 				description: 'Move page to another space',
 			},
 		],
@@ -282,10 +282,10 @@ export const  wikiPageFields = [
 			},
 			{
 				displayName: 'Topics',
-				name: 'topics',
+				name: 'topicsStr',
 				type: 'string',
 				default: '',
-				description: '', // todo Array of integers <int64>
+				description: 'Comma separated list of integers. Example: 1,2',
 			},
 		],
 	},
@@ -447,10 +447,10 @@ export const  wikiPageFields = [
 			},
 			{
 				displayName: 'Topics',
-				name: 'topics',
+				name: 'topicsStr',
 				type: 'string',
 				default: '',
-				description: '', // todo Array of integers <int64>
+				description: 'Comma separated list of integers. Example: 1,2',
 			},
 		],
 	},
@@ -482,7 +482,7 @@ export const  wikiPageFields = [
 	},
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 wikiPage:moveToCategory                    */
+	/*                                 wikiPage:changeIndex		                  */
 	/* -------------------------------------------------------------------------- */
 
 	{
@@ -499,7 +499,7 @@ export const  wikiPageFields = [
 					'wikiPage',
 				],
 				operation: [
-					'moveToCategory',
+					'changeIndex',
 				],
 			},
 		},
@@ -520,18 +520,17 @@ export const  wikiPageFields = [
 					'wikiPage',
 				],
 				operation: [
-					'moveToCategory',
+					'changeIndex',
 				],
 			},
 		},
 		default: '',
-		description: 'Wiki page category id.',
+		description: 'Wiki page target id.',
 	},
 	{
 		displayName: 'Index',
 		name: 'index',
 		type: 'number',
-		required: true,
         typeOptions: {
             numberStepSize: 1,
         },
@@ -541,7 +540,7 @@ export const  wikiPageFields = [
 					'wikiPage',
 				],
 				operation: [
-					'moveToCategory',
+					'changeIndex',
 				],
 			},
 		},
@@ -550,7 +549,7 @@ export const  wikiPageFields = [
 	},
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 wikiPage:moveToSpace                       */
+	/*                                 wikiPage:move		                      */
 	/* -------------------------------------------------------------------------- */
 
 	{
@@ -567,7 +566,7 @@ export const  wikiPageFields = [
 					'wikiPage',
 				],
 				operation: [
-					'moveToSpace',
+					'move',
 				],
 			},
 		},
@@ -585,7 +584,7 @@ export const  wikiPageFields = [
 					'wikiPage',
 				],
 				operation: [
-					'moveToSpace',
+					'move',
 				],
 			},
 		},
