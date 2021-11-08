@@ -236,7 +236,7 @@ export const  taskFields = [
                 name: 'selectedRemindersStr',
                 type: 'string',
                 default: '',
-                description: 'Id\'s of reminder mode.',//todo Array of integers <int64>
+                description: 'Id\'s of reminder mode as integers separated by comma.', // Array of integers <int64>
             },
             {
                 displayName: 'Calendar Mode',
@@ -250,14 +250,14 @@ export const  taskFields = [
                 name: 'assignedUsersStr',
                 type: 'string',
                 default: '',
-                description: 'Guid\'s of user.', // todo Array of strings
+                description: 'Guid\'s of user separated by comma.', // Array of strings
             },
             {
                 displayName: 'Responsible Users',
                 name: 'responsibleUsersStr',
                 type: 'string',
                 default: '',
-                description: 'Guid\'s of user.', // todo Array of strings
+                description: 'Guid\'s of user separated by comma.', // Array of strings
             },
             {
                 displayName: 'Review',
@@ -490,7 +490,7 @@ export const  taskFields = [
                 name: 'selectedRemindersStr',
                 type: 'string',
                 default: '',
-                description: 'Id\'s of reminder mode.',//todo Array of integers <int64>
+                description: 'Id\'s of reminder mode as integers separated by comma.', // Array of integers <int64>
             },
             {
                 displayName: 'Calendar Mode',
@@ -504,14 +504,14 @@ export const  taskFields = [
                 name: 'assignedUsersStr',
                 type: 'string',
                 default: '',
-                description: 'Guid\'s of user.', // todo Array of strings
+                description: 'Guid\'s of user separated by comma.', // Array of strings
             },
             {
                 displayName: 'Responsible Users',
                 name: 'responsibleUsersStr',
                 type: 'string',
                 default: '',
-                description: 'Guid\'s of user.', // todo Array of strings
+                description: 'Guid\'s of user separated by comma.', // Array of strings
             },
             {
                 displayName: 'Review',
@@ -579,7 +579,7 @@ export const  taskFields = [
                 name: 'newItemsStr',
                 type: 'string',
                 default: '',
-                description: 'Checklist items.', // todo Array of strings
+                description: 'Checklist items separated by comma.', // Array of strings
             },
         ],
     },

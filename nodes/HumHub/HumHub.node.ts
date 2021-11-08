@@ -2204,6 +2204,27 @@ export class HumHub implements INodeType {
 							title,
 						};
 						const taskAdditionalFields = this.getNodeParameter('taskAdditionalFields', i) as IDataObject;
+						// remove whitespaces and commas and convert to array of integers
+						if (taskAdditionalFields.selectedRemindersStr) {
+							const selectedRemindersStr = taskAdditionalFields.selectedRemindersStr as string;
+							taskAdditionalFields.selectedReminders = selectedRemindersStr
+								.split(/\s*,\s*/)
+								.map(Number);
+							delete taskAdditionalFields.selectedRemindersStr;
+						}
+						// remove whitespaces and commas and convert to array of strings
+						if (taskAdditionalFields.assignedUsersStr) {
+							const assignedUsersStr = taskAdditionalFields.assignedUsersStr as string;
+							taskAdditionalFields.assignedUsers = assignedUsersStr.split(/\s*,\s*/);
+							delete taskAdditionalFields.assignedUsersStr;
+						}
+						// remove whitespaces and commas and convert to array of strings
+						if (taskAdditionalFields.responsibleUsersStr) {
+							const responsibleUsersStr = taskAdditionalFields.responsibleUsersStr as string;
+							taskAdditionalFields.responsibleUsers = responsibleUsersStr.split(/\s*,\s*/);
+							delete taskAdditionalFields.responsibleUsersStr;
+						}
+
 						Object.assign(task, taskAdditionalFields);
 
 						const startDate = this.getNodeParameter('start_date', i) as string;
@@ -2260,7 +2281,34 @@ export class HumHub implements INodeType {
 						const id = this.getNodeParameter('id', i) as number;
 
 						const task = this.getNodeParameter('task', i) as IDataObject;
+						// remove whitespaces and commas and convert to array of integers
+						if (task.selectedRemindersStr) {
+							const selectedRemindersStr = task.selectedRemindersStr as string;
+							task.selectedReminders = selectedRemindersStr
+								.split(/\s*,\s*/)
+								.map(Number);
+							delete task.selectedRemindersStr;
+						}
+						// remove whitespaces and commas and convert to array of strings
+						if (task.assignedUsersStr) {
+							const assignedUsersStr = task.assignedUsersStr as string;
+							task.assignedUsers = assignedUsersStr.split(/\s*,\s*/);
+							delete task.assignedUsersStr;
+						}
+						// remove whitespaces and commas and convert to array of strings
+						if (task.responsibleUsersStr) {
+							const responsibleUsersStr = task.responsibleUsersStr as string;
+							task.responsibleUsers = responsibleUsersStr.split(/\s*,\s*/);
+							delete task.responsibleUsersStr;
+						}
+
 						const taskForm = this.getNodeParameter('taskForm', i) as IDataObject;
+						// remove whitespaces and commas and convert to array of strings
+						if (taskForm.newItemsStr) {
+							const newItemsStr = taskForm.newItemsStr as string;
+							taskForm.newItems = newItemsStr.split(/\s*,\s*/);
+							delete taskForm.newItemsStr;
+						}
 
 						const body: IDataObject = {
 							Task: task,

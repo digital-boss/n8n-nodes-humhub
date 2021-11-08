@@ -274,7 +274,7 @@ export const  calendarFields = [
 		],
 	},
 	{
-		displayName: 'Calendar Entry Form Start Date',
+		displayName: 'Start Date',
 		name: 'calendarEntryFormStartDate',
 		type: 'string',
 		// required: true,
@@ -310,7 +310,7 @@ export const  calendarFields = [
 		description: '',
 	},
 	{
-		displayName: 'Calendar Entry Form End Date',
+		displayName: 'End Date',
 		name: 'calendarEntryFormEndDate',
 		type: 'string',
 		// required: true,
