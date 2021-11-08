@@ -962,7 +962,7 @@ export class HumHub implements INodeType {
 
 						const model = this.getNodeParameter('model', i) as string;
 						const pk = this.getNodeParameter('pk', i) as number;
-						qs.model = model.replace("\\", "\\\\"); // add escape characters to the string
+						qs.model = model.replace(/\//g, "//"); // add escape character to the backslashes
 						qs.pk = pk;
 
 						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
@@ -1867,7 +1867,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'POST',
-								`/cfiels/folders/container/${id}`,
+								`/cfiles/folders/container/${id}`,
 							body,
 						);
 
@@ -1882,7 +1882,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'GET',
-							`/cfiels/folder/${id}`,
+							`/cfiles/folder/${id}`,
 						);
 
 					} else if (operation === 'update') {
@@ -1903,7 +1903,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'PUT',
-							`/cfiels/folder/${id}`,
+							`/cfiles/folder/${id}`,
 							body,
 						);
 
@@ -1918,7 +1918,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'DELETE',
-							`/cfiels/folder/${id}`,
+							`/cfiles/folder/${id}`,
 						);
 					}
 
@@ -1937,7 +1937,7 @@ export class HumHub implements INodeType {
 								this,
 								'results',
 								'GET',
-								`/cfiels/files/container/${id}`,
+								`/cfiles/files/container/${id}`,
 							);
 						} else {
 							// get additional fields input for limit and page
@@ -1947,7 +1947,7 @@ export class HumHub implements INodeType {
 							responseData = await humhubApiRequest.call(
 								this,
 								'GET',
-								`/cfiels/files/container/${id}`,
+								`/cfiles/files/container/${id}`,
 								undefined,
 								qs,
 							);
@@ -1995,7 +1995,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'POST',
-							`/cfiels/files/container/${id}`,
+							`/cfiles/files/container/${id}`,
 							body,
 						);
 
@@ -2010,7 +2010,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'GET',
-							`/cfiels/file/${id}`,
+							`/cfiles/file/${id}`,
 						);
 
 					} else if (operation === 'delete') {
@@ -2024,7 +2024,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'DELETE',
-							`/cfiels/file/${id}`,
+							`/cfiles/file/${id}`,
 						);
 					}
 
@@ -2046,7 +2046,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'PATCH',
-							`/cfiels/items/container/${id}/make-public`,
+							`/cfiles/items/container/${id}/make-public`,
 							body,
 						);
 
@@ -2066,7 +2066,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'PATCH',
-							`/cfiels/items/container/${id}/make-private`,
+							`/cfiles/items/container/${id}/make-private`,
 							body,
 						);
 
@@ -2093,7 +2093,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'POST',
-							`/cfiels/items/container/${id}/move`,
+							`/cfiles/items/container/${id}/move`,
 							body,
 						);
 
@@ -2113,7 +2113,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'DELETE',
-							`/cfiels/items/container/${id}/delete`,
+							`/cfiles/items/container/${id}/delete`,
 							body,
 						);
 					}

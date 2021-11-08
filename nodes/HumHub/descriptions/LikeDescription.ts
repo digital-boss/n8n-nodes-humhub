@@ -137,7 +137,6 @@ export const  likeFields = [
 		default: '',
 		description: 'The primary key of the record.',
 	},
-	//todo can they be sent with params?
 	...getPagingParameters('like'),
 
 ] as INodeProperties[];

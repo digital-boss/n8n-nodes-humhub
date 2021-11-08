@@ -233,7 +233,7 @@ export const  taskFields = [
             },
             {
                 displayName: 'Selected Reminders',
-                name: 'selectedReminders',
+                name: 'selectedRemindersStr',
                 type: 'string',
                 default: '',
                 description: 'Id\'s of reminder mode.',//todo Array of integers <int64>
@@ -247,14 +247,14 @@ export const  taskFields = [
             },
             {
                 displayName: 'Assigned Users',
-                name: 'assignedUsers',
+                name: 'assignedUsersStr',
                 type: 'string',
                 default: '',
                 description: 'Guid\'s of user.', // todo Array of strings
             },
             {
                 displayName: 'Responsible Users',
-                name: 'responsibleUsers',
+                name: 'responsibleUsersStr',
                 type: 'string',
                 default: '',
                 description: 'Guid\'s of user.', // todo Array of strings
@@ -487,7 +487,7 @@ export const  taskFields = [
             },
             {
                 displayName: 'Selected Reminders',
-                name: 'selectedReminders',
+                name: 'selectedRemindersStr',
                 type: 'string',
                 default: '',
                 description: 'Id\'s of reminder mode.',//todo Array of integers <int64>
@@ -501,14 +501,14 @@ export const  taskFields = [
             },
             {
                 displayName: 'Assigned Users',
-                name: 'assignedUsers',
+                name: 'assignedUsersStr',
                 type: 'string',
                 default: '',
                 description: 'Guid\'s of user.', // todo Array of strings
             },
             {
                 displayName: 'Responsible Users',
-                name: 'responsibleUsers',
+                name: 'responsibleUsersStr',
                 type: 'string',
                 default: '',
                 description: 'Guid\'s of user.', // todo Array of strings
@@ -576,7 +576,7 @@ export const  taskFields = [
             },
             {
                 displayName: 'newItems',
-                name: 'newItems',
+                name: 'newItemsStr',
                 type: 'string',
                 default: '',
                 description: 'Checklist items.', // todo Array of strings
@@ -731,10 +731,14 @@ export const  taskFields = [
 		default: '',
 		description: 'The id of the task.',
 	},
+
+
+
 	{
-		displayName: 'Files',
-		name: 'files',
-		type: 'string',
+		displayName: 'Binary Data',
+		name: 'binaryDataUpload',
+		type: 'boolean',
+		default: false,
 		required: true,
 		displayOptions: {
 			show: {
@@ -746,8 +750,51 @@ export const  taskFields = [
 				],
 			},
 		},
+		description: '',
+	},
+	{
+		displayName: 'File Content',
+		name: 'fileContent',
+		type: 'string',
 		default: '',
-		description: 'The files to upload.', //todo Array of file
+        displayOptions: {
+			show: {
+				resource: [
+					'task',
+				],
+				operation: [
+					'attachFiles',
+				],
+				binaryDataUpload: [
+					false,
+				],
+			},
+		},
+		placeholder: '',
+		description: 'The text content of the file to upload.',
+	},
+	{
+		displayName: 'Binary Property',
+		name: 'binaryPropertyName',
+		type: 'string',
+		default: 'data',
+		required: true,
+
+        displayOptions: {
+			show: {
+				resource: [
+					'task',
+				],
+				operation: [
+					'attachFiles',
+				],
+				binaryDataUpload: [
+					true,
+				],
+			},
+		},
+		placeholder: '',
+		description: 'Name of the binary property which contains the data for the file to be uploaded.',
 	},
 
 	/* -------------------------------------------------------------------------- */

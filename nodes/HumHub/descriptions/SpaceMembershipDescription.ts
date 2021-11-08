@@ -72,7 +72,7 @@ export const spaceMembershipFields = [
 		default: '',
 		description: 'The ID of the space.',
 	},
-	...getPagingParameters('spaceMembership'), //todo? is it allowed
+	...getPagingParameters('spaceMembership'),
 
 	/* -------------------------------------------------------------------------- */
 	/*                                 spaceMembership:create                     */

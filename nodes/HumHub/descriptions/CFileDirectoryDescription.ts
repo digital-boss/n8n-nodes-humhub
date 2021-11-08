@@ -164,7 +164,7 @@ export const  cFileDirectoryFields = [
 		options: [
 			{
 				displayName: 'Description',
-				name: 'Description',
+				name: 'description',
 				type: 'string',
 				default: '',
 				description: '',
