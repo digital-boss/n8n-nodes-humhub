@@ -137,7 +137,7 @@ export const  cFileFields = [
 				],
 			},
 		},
-		description: '',
+		description: 'The file to upload.',
 	},
 	{
 		displayName: 'File Content',

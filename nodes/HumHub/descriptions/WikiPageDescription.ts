@@ -103,23 +103,6 @@ export const  wikiPageFields = [
 		default: '',
 		description: 'ID of content container.',
 	},
-	{
-		displayName: 'Topics',
-		name: 'topics',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: [
-					'wikiPage',
-				],
-				operation: [
-					'getAllByContainer',
-				],
-			},
-		},
-		default: '',
-		description: 'Comma separated list of topics to filter. Example: Music,Dancing',
-	},
     ...getPagingParameters('wikiPage', 'getAllByContainer'),
 
 	/* -------------------------------------------------------------------------- */
@@ -189,7 +172,7 @@ export const  wikiPageFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'The title of the wiki page.',
 	},
 	{
 		displayName: 'Wiki Page Additional Fields',
@@ -211,22 +194,22 @@ export const  wikiPageFields = [
 			{
 				displayName: 'Is Home',
 				name: 'is_home',
-				type: 'number',
-				default: '',
-				description: '',
+				type: 'boolean',
+				default: false,
+				description: 'If to override the wiki index start page.',
 			},
 			{
 				displayName: 'Admin Only',
 				name: 'admin_only',
-				type: 'number',
-				default: '',
-				description: '',
+				type: 'boolean',
+				default: false,
+				description: 'If the admin can edit.',
 			},
 			{
 				displayName: 'Is Category',
 				name: 'is_category',
-				type: 'number',
-				default: '',
+				type: 'boolean',
+				default: false,
 				description: '',
 			},
 			{
@@ -234,7 +217,7 @@ export const  wikiPageFields = [
 				name: 'parent_page_id',
 				type: 'number',
 				default: '',
-				description: '',
+				description: 'The ID of the parent page.',
 			},
 		],
 	},
@@ -254,7 +237,7 @@ export const  wikiPageFields = [
 			},
 		},
 		default: '',
-		description: 'Wiki page revision content.',
+		description: 'The wiki page revision content.',
 	},
 	{
 		displayName: 'Page Edit Form',
@@ -276,9 +259,9 @@ export const  wikiPageFields = [
 			{
 				displayName: 'Is Public',
 				name: 'is_public',
-				type: 'number',
-				default: '',
-				description: '',
+				type: 'boolean',
+				default: true,
+				description: 'If the non space members have read access.',
 			},
 			{
 				displayName: 'Topics',
@@ -313,7 +296,7 @@ export const  wikiPageFields = [
 			},
 		},
 		default: '',
-		description: 'The id of the wiki page.',
+		description: 'The ID of the wiki page.',
 	},
 
 	/* -------------------------------------------------------------------------- */
@@ -339,7 +322,7 @@ export const  wikiPageFields = [
 			},
 		},
 		default: '',
-		description: 'The id of content container.',
+		description: 'The ID of content container.',
 	},
 	{
 		displayName: 'Wiki Page',
@@ -363,27 +346,27 @@ export const  wikiPageFields = [
 				name: 'title',
 				type: 'string',
 				default: '',
-				description: '',
+				description: 'The title of the wiki page.',
 			},
 			{
 				displayName: 'Is Home',
 				name: 'is_home',
-				type: 'number',
-				default: '',
-				description: '',
+				type: 'boolean',
+				default: false,
+				description: 'If to override the wiki index start page.',
 			},
 			{
 				displayName: 'Admin Only',
 				name: 'admin_only',
-				type: 'number',
-				default: '',
-				description: '',
+				type: 'boolean',
+				default: false,
+				description: 'If only admin can edit.',
 			},
 			{
 				displayName: 'Is Category',
 				name: 'is_category',
-				type: 'number',
-				default: '',
+				type: 'boolean',
+				default: false,
 				description: '',
 			},
 			{
@@ -391,7 +374,7 @@ export const  wikiPageFields = [
 				name: 'parent_page_id',
 				type: 'number',
 				default: '',
-				description: '',
+				description: 'The ID of the parent page.',
 			},
 		],
 	},
@@ -441,9 +424,9 @@ export const  wikiPageFields = [
 			{
 				displayName: 'Is Public',
 				name: 'is_public',
-				type: 'number',
-				default: '',
-				description: '',
+				type: 'boolean',
+				default: true,
+				description: 'If the non space members have read access.',
 			},
 			{
 				displayName: 'Topics',
@@ -545,7 +528,7 @@ export const  wikiPageFields = [
 			},
 		},
 		default: '',
-		description: 'Index for order. Default: 0',
+		description: 'Index for the order. Default: 0', //todo check
 	},
 
 	/* -------------------------------------------------------------------------- */

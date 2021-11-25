@@ -142,7 +142,7 @@ export const  postFields = [
 			},
 		},
 		default: '',
-		description: 'The post message.',
+		description: 'The text of the post.',
 	},
 
 	/* -------------------------------------------------------------------------- */
@@ -218,7 +218,7 @@ export const  postFields = [
 			},
 		},
 		default: '',
-		description: 'The post message.',
+		description: 'The text of the post.',
 	},
 
 	/* -------------------------------------------------------------------------- */

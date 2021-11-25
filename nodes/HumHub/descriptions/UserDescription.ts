@@ -137,7 +137,7 @@ export const  userFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'Status of the User.',
 	},
 	{
 		displayName: 'Content Container ID',
@@ -157,7 +157,7 @@ export const  userFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'ID of the content container.',
 	},
 
 	...getUserProfileFields('create'),
@@ -181,7 +181,7 @@ export const  userFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'The password of the user.',
 	},
 
 	/* -------------------------------------------------------------------------- */
@@ -302,7 +302,7 @@ export const  userFields = [
 				name: 'email',
 				type: 'string',
 				default: '',
-				description: 'Email of the user.',
+				description: 'The email of the user.',
 			},
 			{
 				displayName: 'Status',
@@ -312,7 +312,7 @@ export const  userFields = [
 				// 	numberStepSize: 1,
 				// },
 				default: '',
-				description: '',
+				description: 'The status o the user.',
 			},
 			{
 				displayName: 'Content Container ID',
@@ -322,7 +322,7 @@ export const  userFields = [
 				// 	numberStepSize: 1,
 				// },
 				default: '',
-				description: '',
+				description: 'The ID of the content container.',
 			},
 		],
 	},
@@ -354,7 +354,7 @@ export const  userFields = [
 					password: true,
 				},
 				default: '',
-				description: ''
+				description: 'The new password of the user.'
 			},
 		],
 	},

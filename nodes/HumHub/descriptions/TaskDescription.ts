@@ -183,7 +183,7 @@ export const  taskFields = [
 		},
         required: true,
         default: '',
-        description: '',
+        description: 'The title of the task.',
     },
     {
         displayName: 'Task Additional Fields',
@@ -208,28 +208,28 @@ export const  taskFields = [
                 name: 'description',
                 type: 'string',
                 default: '',
-                description: '',
+                description: 'The description of the task.',
             },
             {
                 displayName: 'Task List ID',
                 name: 'task_list_id',
                 type: 'number',
                 default: '',
-                description: '',
+                description: 'The ID of the task list that the task belongs to.',
             },
             {
                 displayName: 'Scheduling',
                 name: 'scheduling',
-                type: 'number',
-                default: '',
-                description: '',
+                type: 'boolean',
+                default: true,
+                description: 'If the task has start and end dates.',
             },
             {
                 displayName: 'All Day',
                 name: 'all_day',
-                type: 'number',
+                type: 'boolean',
                 default: '',
-                description: '',
+                description: 'If the task continues all day.',
             },
             {
                 displayName: 'Selected Reminders',
@@ -241,20 +241,20 @@ export const  taskFields = [
             {
                 displayName: 'Calendar Mode',
                 name: 'cal_mode',
-                type: 'string',
-                default: '',
+                type: 'boolean',
+                default: true,
                 description: 'Add schedule to the space calendar.',
             },
             {
                 displayName: 'Assigned Users',
-                name: 'assignedUsersStr',
+                name: 'assignedUsers',
                 type: 'string',
                 default: '',
                 description: 'Guid\'s of user separated by comma.', // Array of strings
             },
             {
                 displayName: 'Responsible Users',
-                name: 'responsibleUsersStr',
+                name: 'responsibleUsers',
                 type: 'string',
                 default: '',
                 description: 'Guid\'s of user separated by comma.', // Array of strings
@@ -272,7 +272,6 @@ export const  taskFields = [
         displayName: 'Start Date',
         name: 'start_date',
         type: 'string',
-        // required: true,
         displayOptions: {
             show: {
 				resource: [
@@ -290,7 +289,6 @@ export const  taskFields = [
         displayName: 'Start Time',
         name: 'start_time',
         type: 'string',
-        // required: true,
         displayOptions: {
             show: {
 				resource: [
@@ -308,7 +306,6 @@ export const  taskFields = [
         displayName: 'End Date',
         name: 'end_date',
         type: 'string',
-        // required: true,
         displayOptions: {
             show: {
 				resource: [
@@ -326,7 +323,6 @@ export const  taskFields = [
         displayName: 'End Time',
         name: 'end_time',
         type: 'string',
-        // required: true,
         displayOptions: {
             show: {
 				resource: [
@@ -361,23 +357,51 @@ export const  taskFields = [
             {
                 displayName: 'Is Public',
                 name: 'is_public',
-                type: 'number',
+                type: 'boolean',
                 default: '',
-                description: '',
+                description: 'If the task is public.',
             },
+            // {
+            //     displayName: 'Start Date',
+            //     name: 'start_date',
+            //     type: 'string',
+            //     default: '',
+            //     description: 'Required if Task scheduling param is set.',
+            // },
+            // {
+            //     displayName: 'Start Time',
+            //     name: 'start_time',
+            //     type: 'string',
+            //     default: '',
+            //     description: 'Required if Task scheduling param is set and Task all_day param isn\'t set.',
+            // },
+            // {
+            //     displayName: 'End Date',
+            //     name: 'end_date',
+            //     type: 'string',
+            //     default: '',
+            //     description: 'Required if Task scheduling param is set.',
+            // },
+            // {
+            //     displayName: 'End Time',
+            //     name: 'end_time',
+            //     type: 'string',
+            //     default: '',
+            //     description: 'Required if Task scheduling param is set and Task all_day param isn\'t set.',
+            // },
             {
                 displayName: 'Time Zone',
                 name: 'timeZone',
                 type: 'string',
                 default: '',
-                description: '',
+                description: 'The time zone of the task.',
             },
             {
                 displayName: 'New Items',
-                name: 'newItemsStr',
+                name: 'newItems',
                 type: 'string',
                 default: '',
-                description: 'Checklist items.',
+                description: 'Checklist items separated by comma.', // Array of strings
             },
         ],
     },
@@ -455,35 +479,35 @@ export const  taskFields = [
                 name: 'title',
                 type: 'string',
                 default: '',
-                description: '',
+                description: 'The title of the task.',
             },
             {
                 displayName: 'Description',
                 name: 'description',
                 type: 'string',
                 default: '',
-                description: '',
+                description: 'The description of the task',
             },
             {
                 displayName: 'Task List ID',
                 name: 'task_list_id',
                 type: 'number',
                 default: '',
-                description: '',
+                description: 'The task list ID',
             },
             {
                 displayName: 'Scheduling',
                 name: 'scheduling',
-                type: 'number',
-                default: '',
-                description: '',
+                type: 'boolean',
+                default: true,
+                description: 'If the task has start and end dates.',
             },
             {
                 displayName: 'All Day',
                 name: 'all_day',
-                type: 'number',
+                type: 'boolean',
                 default: '',
-                description: '',
+                description: 'If the task continues all day.',
             },
             {
                 displayName: 'Selected Reminders',
@@ -495,20 +519,20 @@ export const  taskFields = [
             {
                 displayName: 'Calendar Mode',
                 name: 'cal_mode',
-                type: 'string',
-                default: '',
+                type: 'boolean',
+                default: true,
                 description: 'Add schedule to the space calendar.',
             },
             {
                 displayName: 'Assigned Users',
-                name: 'assignedUsersStr',
+                name: 'assignedUsers',
                 type: 'string',
                 default: '',
                 description: 'Guid\'s of user separated by comma.', // Array of strings
             },
             {
                 displayName: 'Responsible Users',
-                name: 'responsibleUsersStr',
+                name: 'responsibleUsers',
                 type: 'string',
                 default: '',
                 description: 'Guid\'s of user separated by comma.', // Array of strings
@@ -542,9 +566,9 @@ export const  taskFields = [
             {
                 displayName: 'Is Public',
                 name: 'is_public',
-                type: 'number',
-                default: '',
-                description: '',
+                type: 'boolean',
+                default: true,
+                description: 'If the task is public',
             },
             {
                 displayName: 'Start Date',
@@ -575,8 +599,8 @@ export const  taskFields = [
                 description: 'Required if Task scheduling param is set and Task all_day param isn\'t set.',
             },
             {
-                displayName: 'newItems',
-                name: 'newItemsStr',
+                displayName: 'new Items',
+                name: 'newItems',
                 type: 'string',
                 default: '',
                 description: 'Checklist items separated by comma.', // Array of strings
@@ -636,14 +660,9 @@ export const  taskFields = [
 		description: 'The id of the task.',
 	},
 	{
-		displayName: 'Title',
-		name: 'title',
-		type: 'number',
-        typeOptions: {
-			minValue: 1,
-			maxValue: 5,
-            numberStepSize: 1,
-        },
+		displayName: 'Status',
+		name: 'status',
+		type: 'options',
 		displayOptions: {
 			show: {
 				resource: [
@@ -654,8 +673,26 @@ export const  taskFields = [
 				],
 			},
 		},
-		default: '',
-		description: 'Participant type: 1 - pending; 2 - in progress; 3 - pending review; 5 - completed.',
+        options: [
+            {
+                name: '1 - pending',
+                value: 1,
+            },
+            {
+                name: '2 - in progress',
+                value: 2,
+            },
+            {
+                name: '3 - pending review',
+                value: 3,
+            },
+            {
+                name: '5 - completed',
+                value: 5,
+            },
+        ],
+		default: 1,
+		description: 'Status of the task.',
 	},
 
 	/* -------------------------------------------------------------------------- */
@@ -682,28 +719,6 @@ export const  taskFields = [
 		},
 		default: '',
 		description: 'The id of content container.',
-	},
-	{
-		displayName: 'Title',
-		name: 'title',
-		type: 'number',
-        typeOptions: {
-			minValue: 1,
-			maxValue: 4,
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'task',
-				],
-				operation: [
-					'revert',
-				],
-			},
-		},
-		default: '',
-		description: 'Participant type: 1 - pending; 2 - in progress; 3 - pending review; 4 - completed.',
 	},
 
 	/* -------------------------------------------------------------------------- */
@@ -732,8 +747,6 @@ export const  taskFields = [
 		description: 'The id of the task.',
 	},
 
-
-
 	{
 		displayName: 'Binary Data',
 		name: 'binaryDataUpload',
@@ -750,7 +763,7 @@ export const  taskFields = [
 				],
 			},
 		},
-		description: '',
+		description: 'The binary file to attach.',
 	},
 	{
 		displayName: 'File Content',

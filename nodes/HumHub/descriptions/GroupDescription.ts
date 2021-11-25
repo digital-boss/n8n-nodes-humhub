@@ -83,7 +83,7 @@ export const  groupFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'Name of the group.',
 	},
 	{
 		displayName: 'Description',
@@ -100,7 +100,7 @@ export const  groupFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'Description of the group.',
 	},
 	{
 		displayName: 'Show At Directory',
@@ -117,7 +117,7 @@ export const  groupFields = [
 			},
 		},
 		default: false,
-		description: '',
+		description: 'Show the group in the directory.',
 	},
 	{
 		displayName: 'Show At Registration',
@@ -134,7 +134,7 @@ export const  groupFields = [
 			},
 		},
 		default: false,
-		description: '',
+		description: 'Make the group selectable at registration.',
 	},
 	{
 		displayName: 'Sort Order',
@@ -154,7 +154,7 @@ export const  groupFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'Values between 0 and 10000, the existing elements usually use steps of 100.',
 	},
 
 	/* -------------------------------------------------------------------------- */

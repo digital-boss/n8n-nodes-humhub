@@ -141,7 +141,7 @@ export const  cFileDirectoryFields = [
             },
         },
 		default: '',
-		description: '',
+		description: 'The name of the directory.',
 	},
 	{
 		displayName: 'Folder Additional Fields',
@@ -167,14 +167,14 @@ export const  cFileDirectoryFields = [
 				name: 'description',
 				type: 'string',
 				default: '',
-				description: '',
+				description: 'Description of the folder.',
 			},
 			{
-				displayName: 'Visibility',
+				displayName: 'Is Visible',
 				name: 'visibility',
-				type: 'number',
-				default: '',
-				description: 'Allowed visibility statuses: 0 - Private; 1 - Public',
+				type: 'boolean',
+				default: true,
+				description: 'True if the folder is public.', //todo check
 			},
 		],
 	},
@@ -272,25 +272,24 @@ export const  cFileDirectoryFields = [
 				name: 'title',
 				type: 'string',
 				default: '',
-				description: '',
+				description: 'Name of the folder.',
 			},
 			{
 				displayName: 'Description',
 				name: 'Description',
 				type: 'string',
 				default: '',
-				description: '',
+				description: 'Description of the folder.',
 			},
 			{
-				displayName: 'Visibility',
+				displayName: 'Is Visible',
 				name: 'visibility',
-				type: 'number',
-				default: '',
-				description: 'Allowed visibility statuses: 0 - Private; 1 - Public',
+				type: 'boolean',
+				default: true,
+				description: 'True if the folder is public.', //todo check
 			},
 		],
 	},
-
 
 	/* -------------------------------------------------------------------------- */
 	/*                                 cFileDirectory:delete                      */

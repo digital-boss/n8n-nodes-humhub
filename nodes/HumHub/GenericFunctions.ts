@@ -128,8 +128,8 @@ export function getPagingParameters(resource: string, operation = 'getAll') {
 			description: 'If all results should be returned or only up to a given limit.',
 		},
 		{
-			displayName: 'Additional Fields',
-			name: 'additionalFields',
+			displayName: 'Query Parameters',
+			name: 'queryParameters',
 			type: 'collection',
 			placeholder: 'Add Field',
 			default: {},
@@ -440,5 +440,16 @@ export function getUserProfileFields(operation: string) {
 			],
 		},
 	];
+}
 
+export function convertBooleanToNumber(input: boolean) {
+	let value: number|undefined;
+	if (input === false ) {
+		value = 0;
+	} else if (input === true ) {
+		value = 1;
+	} else {
+		value = undefined;
+	}
+	return value;
 }

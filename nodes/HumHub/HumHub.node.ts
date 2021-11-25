@@ -12,6 +12,7 @@ import {
 } from 'n8n-workflow';
 
 import {
+	convertBooleanToNumber,
 	humhubApiRequest,
 	humhubApiRequestAllItems,
 	validateJSON,
@@ -204,18 +205,6 @@ export class HumHub implements INodeType {
 						value: 'calendar',
 					},
 					{
-						name: 'Calendar Entry',
-						value: 'calendarEntry',
-					},
-					{
-						name: 'Calendar Entry Management',
-						value: 'calendarEntryManagement',
-					},
-					{
-						name: 'Calendar Participant',
-						value: 'calendarParticipant',
-					},
-					{
 						name: 'CFile Directory',
 						value: 'cFileDirectory',
 					},
@@ -344,8 +333,8 @@ export class HumHub implements INodeType {
 						}
 						else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -370,12 +359,20 @@ export class HumHub implements INodeType {
 						const jsonParameterProfile = this.getNodeParameter('jsonParameterProfile', i) as boolean;
 						let profile: IDataObject = {};
 						if (jsonParameterProfile) {
-							const jsonStr = this.getNodeParameter('profileJson', i) as string;
+							const profileJson = this.getNodeParameter('profileJson', i);
 
-							if (validateJSON(jsonStr) === undefined) {
-								throw new NodeOperationError(this.getNode(), 'Profile (JSON) must be a valid json');
+							if (profileJson instanceof Object) {
+								// if it is an object
+								profile = profileJson as IDataObject;
+							} else {
+								// if it is a string
+								if (validateJSON(profileJson as string) !== undefined) {
+									profile = JSON.parse(profileJson as string) as IDataObject;
+								} else {
+									throw new NodeOperationError(this.getNode(), 'Profile (JSON) must be a valid json');
+								}
 							}
-							profile = JSON.parse(jsonStr) as IDataObject;
+
 						} else {
 							profile = this.getNodeParameter('profileUi', i) as IDataObject;
 						}
@@ -462,12 +459,20 @@ export class HumHub implements INodeType {
 						const jsonParameterProfile = this.getNodeParameter('jsonParameterProfile', i) as boolean;
 						let profile: IDataObject = {};
 						if (jsonParameterProfile) {
-							const jsonStr = this.getNodeParameter('profileJson', i) as string;
+							const profileJson = this.getNodeParameter('profileJson', i);
 
-							if (validateJSON(jsonStr) === undefined) {
-								throw new NodeOperationError(this.getNode(), 'Profile (JSON) must be a valid json');
+							if (profileJson instanceof Object) {
+								// if it is an object
+								profile = profileJson as IDataObject;
+							} else {
+								// if it is a string
+								if (validateJSON(profileJson as string) !== undefined) {
+									profile = JSON.parse(profileJson as string) as IDataObject;
+								} else {
+									throw new NodeOperationError(this.getNode(), 'Profile (JSON) must be a valid json');
+								}
 							}
-							profile = JSON.parse(jsonStr) as IDataObject;
+
 						} else {
 							profile = this.getNodeParameter('profileUi', i) as IDataObject;
 						}
@@ -545,8 +550,8 @@ export class HumHub implements INodeType {
 						}
 						else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -688,8 +693,8 @@ export class HumHub implements INodeType {
 						}
 						else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -745,8 +750,8 @@ export class HumHub implements INodeType {
 						}
 						else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -781,8 +786,8 @@ export class HumHub implements INodeType {
 						}
 						else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -832,8 +837,8 @@ export class HumHub implements INodeType {
 						}
 						else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -978,8 +983,8 @@ export class HumHub implements INodeType {
 						}
 						else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1009,8 +1014,8 @@ export class HumHub implements INodeType {
 						}
 						else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1054,8 +1059,8 @@ export class HumHub implements INodeType {
 						}
 						else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1131,8 +1136,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1175,8 +1180,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1216,8 +1221,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1235,8 +1240,11 @@ export class HumHub implements INodeType {
 
 						const name = this.getNodeParameter('name', i) as string;
 						const description = this.getNodeParameter('description', i) as string;
-						const visibility = this.getNodeParameter('visibility', i) as number;
+						let visibility = this.getNodeParameter('visibility', i);
 						const joinPolicy = this.getNodeParameter('join_policy', i) as number;
+
+						// get visibility as a number
+						visibility = convertBooleanToNumber(visibility as boolean);
 
 						const body: IDataObject = {
 							name,
@@ -1275,14 +1283,29 @@ export class HumHub implements INodeType {
 						let space: IDataObject = {};
 						const jsonParameterSpace = this.getNodeParameter('jsonParameterSpace', i) as boolean;
 						if (jsonParameterSpace) {
-							const jsonStr = this.getNodeParameter('spaceJson', i) as string;
 
-							if (validateJSON(jsonStr) === undefined) {
-								throw new NodeOperationError(this.getNode(), 'Profile (JSON) must be a valid json');
+							const spaceJson = this.getNodeParameter('spaceJson', i);
+
+							if (spaceJson instanceof Object) {
+								// if it is an object
+								space = spaceJson as IDataObject;
+							} else {
+								// if it is a string
+								if (validateJSON(spaceJson as string) !== undefined) {
+									space = JSON.parse(spaceJson as string) as IDataObject;
+								} else {
+									throw new NodeOperationError(this.getNode(), 'Profile (JSON) must be a valid json');
+								}
 							}
-							space = JSON.parse(jsonStr) as IDataObject;
+
 						} else {
 							space = this.getNodeParameter('spaceUi', i) as IDataObject;
+
+							// get visibility as a number (or undefined)
+							space.visibility = convertBooleanToNumber(space.visibility as boolean);
+
+							// get visibility as a number (or undefined)
+							space.default_content_visibility = convertBooleanToNumber(space.default_content_visibility as boolean);
 						}
 
 						const body: IDataObject = Object.assign(space);
@@ -1353,8 +1376,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1435,8 +1458,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1513,8 +1536,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1562,8 +1585,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1583,8 +1606,6 @@ export class HumHub implements INodeType {
 
 						const id = this.getNodeParameter('id', i) as number;
 
-						qs.topics = this.getNodeParameter('topics', i) as string;
-
 						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
 						if (returnAll) {
 							responseData = await humhubApiRequestAllItems.call(
@@ -1593,12 +1614,11 @@ export class HumHub implements INodeType {
 								'GET',
 								`/calendar/container/${id}`,
 								undefined,
-								qs,
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1632,44 +1652,53 @@ export class HumHub implements INodeType {
 						const id = this.getNodeParameter('id', i) as number;
 
 						const calendarEntryTitle = this.getNodeParameter('calendarEntryTitle', i) as string;
+
 						const calendarEntry: IDataObject = {
 							title: calendarEntryTitle,
 						};
+
 						const calendarEntryAdditionalFields = this.getNodeParameter('calendarEntryAdditionalFields', i) as IDataObject;
-						Object.assign(calendarEntryTitle, calendarEntryAdditionalFields);
+						Object.assign(calendarEntry, calendarEntryAdditionalFields);
+
+						// get all_day as a number (or undefined)
+						calendarEntry.all_day = convertBooleanToNumber(calendarEntry.all_day as boolean);
+						// get allow_decline as a number (or undefined)
+						calendarEntry.allow_decline = convertBooleanToNumber(calendarEntry.allow_decline as boolean);
+						// get allow_maybe as a number (or undefined)
+						calendarEntry.allow_maybe = convertBooleanToNumber(calendarEntry.allow_maybe as boolean);
 
 						const calendarEntryFormStartDate = this.getNodeParameter('calendarEntryFormStartDate', i) as string;
-						const calendarEntryFormStartTime = this.getNodeParameter('calendarEntryFormStartTime', i) as string;
 						const calendarEntryFormEndDate = this.getNodeParameter('calendarEntryFormEndDate', i) as string;
-						const calendarEntryFormEndTime = this.getNodeParameter('calendarEntryFormEndTime', i) as string;
 						const calendarEntryForm: IDataObject = {
 							start_date: calendarEntryFormStartDate,
-							start_time: calendarEntryFormStartTime,
 							end_date: calendarEntryFormEndDate,
-							end_time: calendarEntryFormEndTime,
 						};
+
 						const calendarEntryFormAdditionalFields = this.getNodeParameter('calendarEntryFormAdditionalFields', i) as IDataObject;
-						// remove whitespaces and commas and convert to array of numbers
-						if (calendarEntryFormAdditionalFields.topicsStr) {
-							const topicsStr = calendarEntryFormAdditionalFields.topicsStr as string;
-							calendarEntryFormAdditionalFields.topics = topicsStr
-								.split(/\s*,\s*/)
-								.map(Number);
-							delete calendarEntryFormAdditionalFields.topicsStr;
-						}
 						Object.assign(calendarEntryForm, calendarEntryFormAdditionalFields);
 
-						const body: IDataObject = {
-								CalendarEntry: calendarEntry,
-								CalendarEntryForm: calendarEntryForm,
-							},
+						// if (calendarEntryForm.topics) {
+						// 	// remove whitespaces and commas and convert to array of strings
+						// 	calendarEntryForm.topics = (calendarEntryForm.topics as string)
+						// 		.split(/\s*,\s*/);
+						// }
 
-							responseData = await humhubApiRequest.call(
-								this,
-								'POST',
-								`/calendar/container/${id}`,
-								body,
-							);
+						// get is_public as a number (or undefined)
+						calendarEntryForm.is_public = convertBooleanToNumber(calendarEntryForm.is_public as boolean);
+						// get forceJoin as a number (or undefined)
+						calendarEntryForm.forceJoin = convertBooleanToNumber(calendarEntryForm.forceJoin as boolean);
+
+						const body: IDataObject = {
+							CalendarEntry: calendarEntry,
+							CalendarEntryForm: calendarEntryForm,
+						},
+
+						responseData = await humhubApiRequest.call(
+							this,
+							'POST',
+							`/calendar/container/${id}`,
+							body,
+						);
 
 					} else if (operation === 'get') {
 
@@ -1694,16 +1723,26 @@ export class HumHub implements INodeType {
 						const id = this.getNodeParameter('id', i) as number;
 
 						const calendarEntry = this.getNodeParameter('calendarEntry', i) as IDataObject;
+
+						// get all_day as a number (or undefined)
+						calendarEntry.all_day = convertBooleanToNumber(calendarEntry.all_day as boolean);
+						// get allow_decline as a number (or undefined)
+						calendarEntry.allow_decline = convertBooleanToNumber(calendarEntry.allow_decline as boolean);
+						// get allow_maybe as a number (or undefined)
+						calendarEntry.allow_maybe = convertBooleanToNumber(calendarEntry.allow_maybe as boolean);
+
 						const calendarEntryForm = this.getNodeParameter('calendarEntryForm', i) as IDataObject;
 
-						// remove whitespaces and commas and convert to array of numbers
-						if (calendarEntryForm.topicsStr) {
-							const topicsStr = calendarEntryForm.topicsStr as string;
-							calendarEntryForm.topics = topicsStr
-								.split(/\s*,\s*/)
-								.map(Number);
-							delete calendarEntryForm.topicsStr;
-						}
+						// if (calendarEntryForm.topics) {
+						// 	// remove whitespaces and commas and convert to array of strings
+						// 	calendarEntryForm.topics = (calendarEntryForm.topics as string)
+						// 		.split(/\s*,\s*/);
+						// }
+
+						// get is_public as a number (or undefined)
+						calendarEntryForm.is_public = convertBooleanToNumber(calendarEntryForm.is_public as boolean);
+						// get forceJoin as a number (or undefined)
+						calendarEntryForm.forceJoin = convertBooleanToNumber(calendarEntryForm.forceJoin as boolean);
 
 						const body: IDataObject = {
 								CalendarEntry: calendarEntry,
@@ -1829,8 +1868,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -1858,6 +1897,9 @@ export class HumHub implements INodeType {
 						// assign description and visibility
 						const folderAdditionalFields = this.getNodeParameter('folderAdditionalFields', i) as IDataObject;
 						Object.assign(folder, folderAdditionalFields);
+
+						// get visibility as a number (or undefined)
+						folder.visibility = convertBooleanToNumber(folder.visibility as boolean);
 
 						const body: IDataObject = {
 							target_id: targetId,
@@ -1895,6 +1937,10 @@ export class HumHub implements INodeType {
 
 						const targetId = this.getNodeParameter('targetId', i) as number;
 						const folder = this.getNodeParameter('folder', i) as IDataObject;
+
+						// get visibility as a number (or undefined)
+						folder.visibility = convertBooleanToNumber(folder.visibility as boolean);
+
 						const body: IDataObject = {
 							target_id: targetId,
 							Folder: folder,
@@ -1941,8 +1987,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -2135,8 +2181,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -2165,8 +2211,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -2203,29 +2249,42 @@ export class HumHub implements INodeType {
 						const task: IDataObject = {
 							title,
 						};
+
 						const taskAdditionalFields = this.getNodeParameter('taskAdditionalFields', i) as IDataObject;
-						// remove whitespaces and commas and convert to array of integers
-						if (taskAdditionalFields.selectedRemindersStr) {
-							const selectedRemindersStr = taskAdditionalFields.selectedRemindersStr as string;
-							taskAdditionalFields.selectedReminders = selectedRemindersStr
+						Object.assign(task, taskAdditionalFields);
+
+						if (task.selectedRemindersStr) {
+							// remove whitespaces and commas and convert to array of integers
+							task.selectedReminders = (task.selectedRemindersStr as string)
 								.split(/\s*,\s*/)
 								.map(Number);
-							delete taskAdditionalFields.selectedRemindersStr;
-						}
-						// remove whitespaces and commas and convert to array of strings
-						if (taskAdditionalFields.assignedUsersStr) {
-							const assignedUsersStr = taskAdditionalFields.assignedUsersStr as string;
-							taskAdditionalFields.assignedUsers = assignedUsersStr.split(/\s*,\s*/);
-							delete taskAdditionalFields.assignedUsersStr;
-						}
-						// remove whitespaces and commas and convert to array of strings
-						if (taskAdditionalFields.responsibleUsersStr) {
-							const responsibleUsersStr = taskAdditionalFields.responsibleUsersStr as string;
-							taskAdditionalFields.responsibleUsers = responsibleUsersStr.split(/\s*,\s*/);
-							delete taskAdditionalFields.responsibleUsersStr;
-						}
 
-						Object.assign(task, taskAdditionalFields);
+							delete task.selectedRemindersStr;
+
+							// if the array contains null throw an error
+							// tslint:disable-next-line:no-any
+							for (const reminder of task.selectedReminders as any[]) {
+								if (!reminder) {
+									throw new NodeOperationError(this.getNode(), 'Selected Reminders should contain numbers separated by comma!');
+								}
+							}
+						}
+						if (task.assignedUsers) {
+							// remove whitespaces and commas and convert to array of strings
+							task.assignedUsers = (task.assignedUsers as string)
+								.split(/\s*,\s*/);
+						}
+						if (task.responsibleUsers) {
+							// remove whitespaces and commas and convert to array of strings
+							task.responsibleUsers = (task.responsibleUsers as string)
+								.split(/\s*,\s*/);
+						}
+						// get scheduling as a number (or undefined)
+						task.scheduling = convertBooleanToNumber(task.scheduling as boolean);
+						// get all_day as a number (or undefined)
+						task.all_day = convertBooleanToNumber(task.all_day as boolean);
+						// get cal_mode as a number (or undefined)
+						task.cal_mode = convertBooleanToNumber(task.cal_mode as boolean);
 
 						const startDate = this.getNodeParameter('start_date', i) as string;
 						const startTime = this.getNodeParameter('start_time', i) as string;
@@ -2237,14 +2296,17 @@ export class HumHub implements INodeType {
 							end_date: endDate,
 							end_time: endTime,
 						};
-						// pass taskForm.newItems as an array of strings
+
 						const taskFormAdditionalFields = this.getNodeParameter('taskFormAdditionalFields', i) as IDataObject;
-						if (taskFormAdditionalFields.newItemsStr) {
-							const newItemsStr = taskFormAdditionalFields.newItemsStr as string;
-							taskFormAdditionalFields.newItems = newItemsStr.split(/\s*,\s*/);
-							delete taskFormAdditionalFields.newItemsStr;
-						}
 						Object.assign(taskForm, taskFormAdditionalFields);
+
+						if (taskForm.newItems) {
+							// pass taskForm.newItems as an array of strings
+							taskForm.newItems = (taskForm.newItems as string)
+								.split(/\s*,\s*/);
+						}
+						// get is_public as a number (or undefined)
+						taskForm.is_public = convertBooleanToNumber(taskForm.is_public as boolean);
 
 						const body: IDataObject = {
 							Task: task,
@@ -2281,34 +2343,48 @@ export class HumHub implements INodeType {
 						const id = this.getNodeParameter('id', i) as number;
 
 						const task = this.getNodeParameter('task', i) as IDataObject;
-						// remove whitespaces and commas and convert to array of integers
+
 						if (task.selectedRemindersStr) {
-							const selectedRemindersStr = task.selectedRemindersStr as string;
-							task.selectedReminders = selectedRemindersStr
+							// remove whitespaces and commas and convert to array of integers
+							task.selectedReminders = (task.selectedRemindersStr as string)
 								.split(/\s*,\s*/)
 								.map(Number);
+
 							delete task.selectedRemindersStr;
+
+							// if the array contains null throw an error
+							// tslint:disable-next-line:no-any
+							for (const reminder of task.selectedReminders as any[]) {
+								if (!reminder) {
+									throw new NodeOperationError(this.getNode(), 'Selected Reminders should contain numbers separated by comma!');
+								}
+							}
 						}
-						// remove whitespaces and commas and convert to array of strings
-						if (task.assignedUsersStr) {
-							const assignedUsersStr = task.assignedUsersStr as string;
-							task.assignedUsers = assignedUsersStr.split(/\s*,\s*/);
-							delete task.assignedUsersStr;
+						if (task.assignedUsers) {
+							// remove whitespaces and commas and convert to array of strings
+							task.assignedUsers = (task.assignedUsers as string)
+								.split(/\s*,\s*/);
 						}
-						// remove whitespaces and commas and convert to array of strings
-						if (task.responsibleUsersStr) {
-							const responsibleUsersStr = task.responsibleUsersStr as string;
-							task.responsibleUsers = responsibleUsersStr.split(/\s*,\s*/);
-							delete task.responsibleUsersStr;
+						if (task.responsibleUsers) {
+							// remove whitespaces and commas and convert to array of strings
+							task.responsibleUsers = (task.responsibleUsers as string)
+								.split(/\s*,\s*/);
 						}
+						// get scheduling as a number (or undefined)
+						task.scheduling = convertBooleanToNumber(task.scheduling as boolean);
+						// get all_day as a number (or undefined)
+						task.all_day = convertBooleanToNumber(task.all_day as boolean);
+						// get cal_mode as a number (or undefined)
+						task.cal_mode = convertBooleanToNumber(task.cal_mode as boolean);
 
 						const taskForm = this.getNodeParameter('taskForm', i) as IDataObject;
-						// remove whitespaces and commas and convert to array of strings
-						if (taskForm.newItemsStr) {
-							const newItemsStr = taskForm.newItemsStr as string;
-							taskForm.newItems = newItemsStr.split(/\s*,\s*/);
-							delete taskForm.newItemsStr;
+						if (taskForm.newItems) {
+							// remove whitespaces and commas and convert to array of strings
+							taskForm.newItems = (taskForm.newItems as string)
+								.split(/\s*,\s*/);
 						}
+						// get is_public as a number (or undefined)
+						taskForm.is_public = convertBooleanToNumber(taskForm.is_public as boolean);
 
 						const body: IDataObject = {
 							Task: task,
@@ -2343,10 +2419,10 @@ export class HumHub implements INodeType {
 						// ----------------------------------------
 
 						const id = this.getNodeParameter('id', i) as number;
-						const title = this.getNodeParameter('title', i) as number;
+						const status = this.getNodeParameter('status', i) as number;
 
 						const body: IDataObject = {
-							title,
+							status,
 						};
 
 						responseData = await humhubApiRequest.call(
@@ -2454,8 +2530,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -2476,7 +2552,10 @@ export class HumHub implements INodeType {
 
 						const name = this.getNodeParameter('name', i) as string;
 						const color = this.getNodeParameter('color', i) as string;
-						const hideIfCompleted = this.getNodeParameter('hide_if_completed', i) as number;
+						let hideIfCompleted = this.getNodeParameter('hide_if_completed', i);
+
+						// get hideIfCompleted as a number
+						hideIfCompleted = convertBooleanToNumber(hideIfCompleted as boolean);
 
 						const body: IDataObject = {
 							TaskList: {
@@ -2517,9 +2596,12 @@ export class HumHub implements INodeType {
 
 						const id = this.getNodeParameter('id', i) as number;
 
-						const name = this.getNodeParameter('name', i) as string;
-						const color = this.getNodeParameter('color', i) as string;
-						const hideIfCompleted = this.getNodeParameter('hide_if_completed', i) as number;
+						const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+						const name = additionalFields.name;
+						const color = additionalFields.color;
+						let hideIfCompleted = additionalFields.hide_if_completed;
+
+						hideIfCompleted = convertBooleanToNumber(hideIfCompleted as boolean);
 
 						const body: IDataObject = {
 							TaskList: {
@@ -2570,8 +2652,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -2589,8 +2671,6 @@ export class HumHub implements INodeType {
 						// ----------------------------------------
 
 						const id = this.getNodeParameter('id', i) as number;
-						const topics = this.getNodeParameter('topics', i) as string;
-						qs.topics = topics;
 
 						const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
 						if (returnAll) {
@@ -2600,12 +2680,11 @@ export class HumHub implements INodeType {
 								'GET',
 								`/wiki/container/${id}`,
 								undefined,
-								qs,
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -2645,18 +2724,35 @@ export class HumHub implements INodeType {
 						const wikiPageAdditionalFields = this.getNodeParameter('wikiPageAdditionalFields', i) as IDataObject;
 						Object.assign(wikiPage, wikiPageAdditionalFields);
 
+						// get is_home as a number (or undefined)
+						wikiPage.is_home = convertBooleanToNumber(wikiPage.is_home as boolean);
+						// get admin_only as a number (or undefined)
+						wikiPage.admin_only = convertBooleanToNumber(wikiPage.admin_only as boolean);
+						// get is_category as a number (or undefined)
+						wikiPage.is_category = convertBooleanToNumber(wikiPage.is_category as boolean);
+
 						const revisionContent = this.getNodeParameter('revisionContent', i) as string;
 
 						const pageEditForm = this.getNodeParameter('pageEditForm', i) as IDataObject;
 
-						// remove whitespaces and commas and convert to array of numbers
 						if (pageEditForm.topicsStr) {
-							const topicsStr = pageEditForm.topicsStr as string;
-							pageEditForm.topics = topicsStr
+							// remove whitespaces and commas and convert to array of numbers
+							pageEditForm.topics = (pageEditForm.topicsStr as string)
 								.split(/\s*,\s*/)
 								.map(Number);
+
 							delete pageEditForm.topicsStr;
+
+							// if the array contains null throw an error
+							// tslint:disable-next-line:no-any
+							for (const reminder of pageEditForm.topics as any[]) {
+								if (!reminder) {
+									throw new NodeOperationError(this.getNode(), 'Topics should contain numbers separated by comma!');
+								}
+							}
 						}
+						// get is_public as a number (or undefined)
+						pageEditForm.is_public = convertBooleanToNumber(pageEditForm.is_public as boolean);
 
 						const body: IDataObject = {
 							WikiPage: wikiPage,
@@ -2699,14 +2795,31 @@ export class HumHub implements INodeType {
 						const wikiPageRevision = this.getNodeParameter('wikiPageRevision', i) as IDataObject;
 						const pageEditForm = this.getNodeParameter('pageEditForm', i) as IDataObject;
 
-						// remove whitespaces and commas and convert to array of numbers
+						// get is_home as a number (or undefined)
+						wikiPage.is_home = convertBooleanToNumber(wikiPage.is_home as boolean);
+						// get admin_only as a number (or undefined)
+						wikiPage.admin_only = convertBooleanToNumber(wikiPage.admin_only as boolean);
+						// get is_category as a number (or undefined)
+						wikiPage.is_category = convertBooleanToNumber(wikiPage.is_category as boolean);
+
 						if (pageEditForm.topicsStr) {
-							const topicsStr = pageEditForm.topicsStr as string;
-							pageEditForm.topics = topicsStr
+							// remove whitespaces and commas and convert to array of numbers
+							pageEditForm.topics = (pageEditForm.topicsStr as string)
 								.split(/\s*,\s*/)
 								.map(Number);
+
 							delete pageEditForm.topicsStr;
+
+							// if the array contains null throw an error
+							// tslint:disable-next-line:no-any
+							for (const reminder of pageEditForm.topics as any[]) {
+								if (!reminder) {
+									throw new NodeOperationError(this.getNode(), 'Topics should contain numbers separated by comma!');
+								}
+							}
 						}
+						// get is_public as a number (or undefined)
+						pageEditForm.is_public = convertBooleanToNumber(pageEditForm.is_public as boolean);
 
 						const body: IDataObject = {
 							WikiPage: wikiPage,
@@ -2800,8 +2913,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -2858,8 +2971,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -2931,8 +3044,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,
@@ -3082,8 +3195,8 @@ export class HumHub implements INodeType {
 							);
 						} else {
 							// get additional fields input for limit and page
-							const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-							Object.assign(qs, additionalFields);
+							const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+							Object.assign(qs, queryParameters);
 
 							responseData = await humhubApiRequest.call(
 								this,

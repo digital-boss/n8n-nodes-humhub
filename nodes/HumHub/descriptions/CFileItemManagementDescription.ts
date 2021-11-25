@@ -185,7 +185,7 @@ export const  cFileItemManagementFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'Source ID of the cFile Folder.',
 	},
     {
 		displayName: 'Destination ID',
@@ -206,7 +206,7 @@ export const  cFileItemManagementFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'Destination ID of the cFile Folder.',
 	},
     {
 		displayName: 'Selection',
@@ -274,7 +274,7 @@ export const  cFileItemManagementFields = [
 			},
 		},
 		default: '',
-		description: 'Item id in format {type}_{id}.',// todo test
+		description: 'Item id in format {type}_{id}.', // todo test
 	},
 
 ] as INodeProperties[];

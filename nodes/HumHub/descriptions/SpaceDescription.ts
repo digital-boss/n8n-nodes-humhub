@@ -88,7 +88,7 @@ export const spaceFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'Name of the space.',
 	},
 	{
 		displayName: 'Description',
@@ -105,16 +105,13 @@ export const spaceFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'Description of the space.',
 	},
 	{
-		displayName: 'Visibility',
+		displayName: 'Is Visible',
 		name: 'visibility',
-		type: 'number',
+		type: 'boolean',
 		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
 		displayOptions: {
 			show: {
 				resource: [
@@ -125,17 +122,14 @@ export const spaceFields = [
 				],
 			},
 		},
-		default: '',
-		description: '',
+		default: true,
+		description: 'If the space is public (members only) or private (invisible).',
 	},
 	{
 		displayName: 'Join Policy',
 		name: 'join_policy',
-		type: 'number',
+		type: 'options',
 		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
 		displayOptions: {
 			show: {
 				resource: [
@@ -146,8 +140,22 @@ export const spaceFields = [
 				],
 			},
 		},
-		default:'',
-		description: '',
+		options: [
+			{
+				name: '1 - only by invite',
+				value: 1,
+			},
+			{
+				name: '2 - invite and request',
+				value: 2,
+			},
+			{
+				name: '3 - everyone can enter',
+				value: 3,
+			},
+		],
+		default: 1,
+		description: 'Join policy of the space.',
 	},
 
 	/* -------------------------------------------------------------------------- */
@@ -257,7 +265,7 @@ export const spaceFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'The space fields as JSON or JSON string.',
 	},
 	{
 		displayName: 'Space',
@@ -299,69 +307,73 @@ export const spaceFields = [
 				name: 'tags',
 				type: 'string',
 				default: '',
-				description: '',
+				description: 'Tags of the space.',
 			},
 			{
 				displayName: 'Color',
 				name: 'color',
 				type: 'string',
 				default: '',
-				description: '',
+				description: 'Color of the space.',
 			},
 			{
 				displayName: 'URL',
 				name: 'url',
 				type: 'string',
 				default: '',
-				description: '',
+				description: 'URL of the space.',
 			},
 			{
 				displayName: 'Index URL',
 				name: 'indexUrl',
 				type: 'string',
 				default: '',
-				description: '',
+				description: 'Index URL of the space.',
 			},
 			{
 				displayName: 'Index Guest URL',
 				name: 'indexGuestUrl',
 				type: 'string',
 				default: '',
-				description: '',
+				description: 'Index guest URL of the space.',
 			},
 			{
-				displayName: 'Visibility',
+				displayName: 'Is Visible',
 				name: 'visibility',
-				type: 'number',
-				typeOptions: {
-					numberStepSize: 1,
-				},
-				default: '',
-				description: '',
+				type: 'boolean',
+				default: true,
+				description: 'If the space is public (members only) or private (invisible).',
 			},
 			{
 				displayName: 'Join Policy',
 				name: 'join_policy',
-				type: 'number',
-				typeOptions: {
-					numberStepSize: 1,
-				},
-				default: '',
-				description: '',
+				type: 'options',
+				options: [
+					{
+						name: '1 - only by invite',
+						value: 1,
+					},
+					{
+						name: '2 - invite and request',
+						value: 2,
+					},
+					{
+						name: '3 - everyone can enter',
+						value: 3,
+					},
+				],
+				default: 1,
+				description: 'Join policy of the space.',
 			},
 			{
 				displayName: 'Default Content Visibility',
 				name: 'default_content_visibility',
-				type: 'number',
-				typeOptions: {
-					numberStepSize: 1,
-				},
-				default: '',
-				description: '',
+				type: 'boolean',
+				default: true,
+				description: 'If the space content is visible by default.',
 			},
 		],
 	},
-
 
 	/* -------------------------------------------------------------------------- */
 	/*                                 space:delete                               */

@@ -121,7 +121,7 @@ export const  taskListFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'Name of the task list.',
 	},
 	{
 		displayName: 'Color',
@@ -138,15 +138,12 @@ export const  taskListFields = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'Color of the task list.',
 	},
 	{
 		displayName: 'Hide If Completed',
 		name: 'hide_if_completed',
-		type: 'number',
-        typeOptions: {
-            numberStepSize: 1,
-        },
+		type: 'boolean',
 		displayOptions: {
 			show: {
 				resource: [
@@ -157,13 +154,12 @@ export const  taskListFields = [
 				],
 			},
 		},
-		default: '',
-		description: '',
+		default: true,
+		description: 'If the task list should be hidden after completion.',
 	},
 
-
 	/* -------------------------------------------------------------------------- */
-	/*                                 taskList:get                             */
+	/*                                 taskList:get                            	  */
 	/* -------------------------------------------------------------------------- */
 
     {
@@ -189,7 +185,7 @@ export const  taskListFields = [
 	},
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 taskList:update                              */
+	/*                                 taskList:update                            */
 	/* -------------------------------------------------------------------------- */
 
 	{
@@ -214,9 +210,9 @@ export const  taskListFields = [
 		description: 'The id of the task list.',
 	},
 	{
-		displayName: 'Name',
-		name: 'name',
-		type: 'string',
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
 		required: true,
 		displayOptions: {
 			show: {
@@ -228,49 +224,35 @@ export const  taskListFields = [
 				],
 			},
 		},
-		default: '',
+		default: [],
 		description: '',
-	},
-	{
-		displayName: 'Color',
-		name: 'color',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: [
-					'taskList',
-				],
-				operation: [
-					'update',
-				],
+		options: [
+			{
+				displayName: 'Name',
+				name: 'name',
+				type: 'string',
+				default: '',
+				description: 'Name of the task list.',
 			},
-		},
-		default: '',
-		description: '',
-	},
-	{
-		displayName: 'Hide If Completed',
-		name: 'hide_if_completed',
-		type: 'number',
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'taskList',
-				],
-				operation: [
-					'update',
-				],
+			{
+				displayName: 'Color',
+				name: 'color',
+				type: 'string',
+				default: '',
+				description: 'Color of the task list.',
 			},
-		},
-		default: '',
-		description: '',
+			{
+				displayName: 'Hide If Completed',
+				name: 'hide_if_completed',
+				type: 'boolean',
+				default: true,
+				description: 'If the task list should be hidden after completion.',
+			},
+		],
 	},
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 taskList:delete                              */
+	/*                                 taskList:delete                            */
 	/* -------------------------------------------------------------------------- */
 
 	{
