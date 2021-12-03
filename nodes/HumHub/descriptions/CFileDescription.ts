@@ -120,30 +120,16 @@ export const  cFileFields = [
 		default: '',
 		description: 'Id of the directory.',
 	},
-
 	{
-		displayName: 'Binary Data',
-		name: 'binaryDataUpload',
-		type: 'boolean',
-		default: false,
-		required: true,
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'upload',
-				],
-			},
-		},
-		description: 'The file to upload.',
-	},
-	{
-		displayName: 'File Content',
-		name: 'fileContent',
-		type: 'string',
+		displayName: 'Files',
+		name: 'files',
+		placeholder: 'Add File',
+		type: 'fixedCollection',
 		default: '',
+		description: 'Which files to send.',
+		typeOptions: {
+			multipleValues: true,
+		},
 		displayOptions: {
 			show: {
 				resource: [
@@ -152,37 +138,24 @@ export const  cFileFields = [
 				operation: [
 					'upload',
 				],
-				binaryDataUpload: [
-					false,
-				],
 			},
 		},
-		placeholder: '',
-		description: 'The text content of the file to upload.',
-	},
-	{
-		displayName: 'Binary Property',
-		name: 'binaryPropertyName',
-		type: 'string',
-		default: 'data',
-		required: true,
-		displayOptions: {
-			show: {
-				resource: [
-					'cFile',
-				],
-				operation: [
-					'upload',
-				],
-				binaryDataUpload: [
-					true,
+		options: [
+			{
+				displayName: 'File',
+				name: 'file',
+				values: [
+					{
+						displayName: 'Property Name',
+						name: 'binaryPropertyName',
+						type: 'string',
+						default: 'data',
+						description: 'Name of the binary property which contains the data for the file to be sent.',
+					},
 				],
 			},
-		},
-		placeholder: '',
-		description: 'Name of the binary property which contains the data for the file to be uploaded.',
+		],
 	},
-
 
 	/* -------------------------------------------------------------------------- */
 	/*                                 cFile:get                              	  */

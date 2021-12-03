@@ -159,8 +159,7 @@ export const  cFileDirectoryFields = [
 				],
 			},
 		},
-		default: [],
-		description: '',
+		default: {},
 		options: [
 			{
 				displayName: 'Description',
@@ -174,7 +173,7 @@ export const  cFileDirectoryFields = [
 				name: 'visibility',
 				type: 'boolean',
 				default: true,
-				description: 'True if the folder is public.', //todo check
+				description: 'True if the folder is public.',
 			},
 		],
 	},
@@ -264,8 +263,7 @@ export const  cFileDirectoryFields = [
 				],
 			},
 		},
-		default: [],
-		description: '',
+		default: {},
 		options: [
 			{
 				displayName: 'Title',
@@ -286,7 +284,7 @@ export const  cFileDirectoryFields = [
 				name: 'visibility',
 				type: 'boolean',
 				default: true,
-				description: 'True if the folder is public.', //todo check
+				description: 'True if the folder is public.',
 			},
 		],
 	},

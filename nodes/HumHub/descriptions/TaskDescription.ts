@@ -746,30 +746,16 @@ export const  taskFields = [
 		default: '',
 		description: 'The id of the task.',
 	},
-
-	{
-		displayName: 'Binary Data',
-		name: 'binaryDataUpload',
-		type: 'boolean',
-		default: false,
-		required: true,
-		displayOptions: {
-			show: {
-				resource: [
-					'task',
-				],
-				operation: [
-					'attachFiles',
-				],
-			},
-		},
-		description: 'The binary file to attach.',
-	},
-	{
-		displayName: 'File Content',
-		name: 'fileContent',
-		type: 'string',
+    {
+		displayName: 'Files',
+		name: 'files',
+		placeholder: 'Add File',
+		type: 'fixedCollection',
 		default: '',
+		description: 'Which files to send.',
+		typeOptions: {
+			multipleValues: true,
+		},
         displayOptions: {
 			show: {
 				resource: [
@@ -778,36 +764,23 @@ export const  taskFields = [
 				operation: [
 					'attachFiles',
 				],
-				binaryDataUpload: [
-					false,
-				],
 			},
 		},
-		placeholder: '',
-		description: 'The text content of the file to upload.',
-	},
-	{
-		displayName: 'Binary Property',
-		name: 'binaryPropertyName',
-		type: 'string',
-		default: 'data',
-		required: true,
-
-        displayOptions: {
-			show: {
-				resource: [
-					'task',
-				],
-				operation: [
-					'attachFiles',
-				],
-				binaryDataUpload: [
-					true,
+		options: [
+			{
+				displayName: 'File',
+				name: 'file',
+				values: [
+					{
+						displayName: 'Property Name',
+						name: 'binaryPropertyName',
+						type: 'string',
+						default: 'data',
+						description: 'Name of the binary property which contains the data for the file to be sent.',
+					},
 				],
 			},
-		},
-		placeholder: '',
-		description: 'Name of the binary property which contains the data for the file to be uploaded.',
+		],
 	},
 
 	/* -------------------------------------------------------------------------- */

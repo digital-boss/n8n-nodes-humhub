@@ -508,8 +508,8 @@ export const  wikiPageFields = [
 			},
 		},
 		default: '',
-		description: 'Wiki page target id.',
-	},
+		description: 'Wiki page target id. NOTE (2021.12.03): humhub returns 400 not found.',
+	}, // todo: humhub returns error
 	{
 		displayName: 'Index',
 		name: 'index',
@@ -528,8 +528,8 @@ export const  wikiPageFields = [
 			},
 		},
 		default: '',
-		description: 'Index for the order. Default: 0', //todo check
-	},
+		description: 'Index for the order. Default: 0',
+	}, // todo: humhub returns error
 
 	/* -------------------------------------------------------------------------- */
 	/*                                 wikiPage:move		                      */
@@ -572,7 +572,7 @@ export const  wikiPageFields = [
 			},
 		},
 		default: '',
-		description: 'Guid of target space container.',
-	},
+		description: 'Guid of target space container. NOTE (2021.12.03): humhub returns 500 server error.',
+	}, // todo: humhub returns error
 
 ] as INodeProperties[];

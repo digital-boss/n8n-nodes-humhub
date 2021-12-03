@@ -70,6 +70,15 @@ import {
 	mailTagOperations,
 	mailTagFields,
 } from './descriptions';
+import * as buffer from "buffer";
+
+type Files = {
+	file: File[];
+};
+
+type File = {
+	[name: string]: string;
+};
 
 export class HumHub implements INodeType {
 	description: INodeTypeDescription = {
@@ -82,7 +91,7 @@ export class HumHub implements INodeType {
 		description: 'Consume HumHub API',
 		defaults: {
 			name: 'HumHub',
-			color: '#61c2d0',
+			color: '#60c3d0',
 		},
 		inputs: ['main'],
 		outputs: ['main'],
@@ -1677,12 +1686,6 @@ export class HumHub implements INodeType {
 						const calendarEntryFormAdditionalFields = this.getNodeParameter('calendarEntryFormAdditionalFields', i) as IDataObject;
 						Object.assign(calendarEntryForm, calendarEntryFormAdditionalFields);
 
-						// if (calendarEntryForm.topics) {
-						// 	// remove whitespaces and commas and convert to array of strings
-						// 	calendarEntryForm.topics = (calendarEntryForm.topics as string)
-						// 		.split(/\s*,\s*/);
-						// }
-
 						// get is_public as a number (or undefined)
 						calendarEntryForm.is_public = convertBooleanToNumber(calendarEntryForm.is_public as boolean);
 						// get forceJoin as a number (or undefined)
@@ -1778,28 +1781,26 @@ export class HumHub implements INodeType {
 
 						const id = this.getNodeParameter('id', i) as number;
 
-						// todo test
-						let files: string | Buffer | IDataObject = '';
-						if (this.getNodeParameter('binaryDataUpload', i) === true) {
-							// Is binary file to upload
+						// todo: test
+						const item = items[i];
+						const files = [] as IDataObject[];
+						const filesData = this.getNodeParameter('files', i) as Files;
 
-							const item = items[i];
+						if(filesData && filesData.file) {
+							for (let j = 0; j < filesData.file.length; j++) {
 
-							if (item.binary === undefined) {
-								throw new NodeOperationError(this.getNode(), 'No binary data exists on item!');
+								const binaryPropertyName = filesData.file[j].binaryPropertyName as string;
+
+								if (item.binary === undefined) {
+									throw new NodeOperationError(this.getNode(), 'No binary data exists on item!');
+								}
+								if (item.binary[binaryPropertyName] === undefined) {
+									throw new NodeOperationError(this.getNode(), `Binary data property "${binaryPropertyName}" does not exist!`);
+								}
+
+								const buffer = await this.helpers.getBinaryDataBuffer(j, binaryPropertyName);
+								files.push({Data: buffer.toString('base64')});
 							}
-
-							const propertyNameUpload = this.getNodeParameter('binaryPropertyName', i) as string;
-
-							if (item.binary[propertyNameUpload] === undefined) {
-								throw new NodeOperationError(this.getNode(), `No binary data property "${propertyNameUpload}" does not exists on item!`);
-							}
-
-							files = Buffer.from(item.binary[propertyNameUpload].data, BINARY_ENCODING);
-
-						} else {
-							// Is text file
-							files = this.getNodeParameter('fileContent', i) as string;
 						}
 
 						const body: IDataObject = {
@@ -1809,7 +1810,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'POST',
-							`calendar/entry/${id}/upload-files`,
+							`/calendar/entry/${id}/upload-files`,
 							body,
 						);
 
@@ -1825,7 +1826,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'DELETE',
-							`calendar/entry/${id}/remove-file/${fileId}`,
+							`/calendar/entry/${id}/remove-file/${fileId}`,
 						);
 
 					} else if (operation === 'changeParticipant') {
@@ -1844,7 +1845,7 @@ export class HumHub implements INodeType {
 						responseData = await humhubApiRequest.call(
 							this,
 							'POST',
-							`calendar/entry/${id}/respond`,
+							`/calendar/entry/${id}/respond`,
 							body,
 						);
 					}
@@ -2009,28 +2010,26 @@ export class HumHub implements INodeType {
 
 						const folderId = this.getNodeParameter('folder_id', i) as number;
 
-						// todo test
-						let files: string | Buffer | IDataObject = '';
-						if (this.getNodeParameter('binaryDataUpload', i) === true) {
-							// Is binary file to upload
+						// todo: test
+						const item = items[i];
+						const files = [] as Buffer[];
+						const filesData = this.getNodeParameter('files', i) as Files;
 
-							const item = items[i];
+						if(filesData && filesData.file) {
+							for (let j = 0; j < filesData.file.length; j++) {
 
-							if (item.binary === undefined) {
-								throw new NodeOperationError(this.getNode(), 'No binary data exists on item!');
+								const binaryPropertyName = filesData.file[j].binaryPropertyName as string;
+
+								if (item.binary === undefined) {
+									throw new NodeOperationError(this.getNode(), 'No binary data exists on item!');
+								}
+								if (item.binary[binaryPropertyName] === undefined) {
+									throw new NodeOperationError(this.getNode(), `Binary data property "${binaryPropertyName}" does not exist!`);
+								}
+
+								const buffer = await this.helpers.getBinaryDataBuffer(j, binaryPropertyName);
+								files.push(Buffer.from(item.binary[binaryPropertyName].data, BINARY_ENCODING));
 							}
-
-							const propertyNameUpload = this.getNodeParameter('binaryPropertyName', i) as string;
-
-							if (item.binary[propertyNameUpload] === undefined) {
-								throw new NodeOperationError(this.getNode(), `No binary data property "${propertyNameUpload}" does not exists on item!`);
-							}
-
-							files = Buffer.from(item.binary[propertyNameUpload].data, BINARY_ENCODING);
-
-						} else {
-							// Is text file
-							files = this.getNodeParameter('fileContent', i) as string;
 						}
 
 						const body: IDataObject = {
@@ -2460,28 +2459,26 @@ export class HumHub implements INodeType {
 
 						const id = this.getNodeParameter('id', i) as number;
 
-						// todo test
-						let files: string | Buffer | IDataObject = '';
-						if (this.getNodeParameter('binaryDataUpload', i) === true) {
-							// Is binary file to upload
+						// todo: test
+						const item = items[i];
+						const files = [] as Buffer[];
+						const filesData = this.getNodeParameter('files', i) as Files;
 
-							const item = items[i];
+						if(filesData && filesData.file) {
+							for (let j = 0; j < filesData.file.length; j++) {
 
-							if (item.binary === undefined) {
-								throw new NodeOperationError(this.getNode(), 'No binary data exists on item!');
+								const binaryPropertyName = filesData.file[j].binaryPropertyName as string;
+
+								if (item.binary === undefined) {
+									throw new NodeOperationError(this.getNode(), 'No binary data exists on item!');
+								}
+								if (item.binary[binaryPropertyName] === undefined) {
+									throw new NodeOperationError(this.getNode(), `Binary data property "${binaryPropertyName}" does not exist!`);
+								}
+
+								const buffer = await this.helpers.getBinaryDataBuffer(j, binaryPropertyName);
+								files.push(Buffer.from(item.binary[binaryPropertyName].data, BINARY_ENCODING));
 							}
-
-							const propertyNameUpload = this.getNodeParameter('binaryPropertyName', i) as string;
-
-							if (item.binary[propertyNameUpload] === undefined) {
-								throw new NodeOperationError(this.getNode(), `No binary data property "${propertyNameUpload}" does not exists on item!`);
-							}
-
-							files = Buffer.from(item.binary[propertyNameUpload].data, BINARY_ENCODING);
-
-						} else {
-							// Is text file
-							files = this.getNodeParameter('fileContent', i) as string;
 						}
 
 						const body: IDataObject = {

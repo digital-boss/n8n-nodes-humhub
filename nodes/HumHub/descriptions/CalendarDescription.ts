@@ -184,7 +184,7 @@ export const  calendarFields = [
 		displayName: 'Calendar Entry Additional Fields',
 		name: 'calendarEntryAdditionalFields',
 		type: 'collection',
-		required: true,
+		placeholder: 'Add Field',
 		displayOptions: {
 			show: {
 				resource: [
@@ -195,8 +195,7 @@ export const  calendarFields = [
 				],
 			},
 		},
-		default: [],
-		description: '',
+		default: {},
 		options: [
 			{
 				displayName: 'Description',
@@ -224,7 +223,7 @@ export const  calendarFields = [
 				name: 'participation_mode',
 				type: 'number',
 				default: '',
-				description: 'Mode of participating.', // todo options
+				description: 'Mode of participating.', // todo: make it type options
 			},
 			{
 				displayName: 'Max Participants',
@@ -272,8 +271,8 @@ export const  calendarFields = [
 			},
 		},
 		default: '',
-		description: 'Start date of the calendar entry.',
-	},
+		description: 'Start date of the calendar entry. NOTE (2021.12.03): humhub returns error for wrong date format.',
+	}, // todo: humhub returns error
 	{
 		displayName: 'End Date',
 		name: 'calendarEntryFormEndDate',
@@ -290,8 +289,8 @@ export const  calendarFields = [
 			},
 		},
 		default: '',
-		description: 'End date of the calendar entry.',
-	},
+		description: 'End date of the calendar entry. NOTE (2021.12.03): humhub returns error for wrong date format.',
+	}, // todo: humhub returns error
     {
 		displayName: 'Calendar Entry Form Additional Fields',
 		name: 'calendarEntryFormAdditionalFields',
@@ -307,8 +306,7 @@ export const  calendarFields = [
 				],
 			},
 		},
-		default: [],
-		description: '',
+		default: {},
 		options: [
 			{
 				displayName: 'Is Public',
@@ -421,8 +419,7 @@ export const  calendarFields = [
 				],
 			},
 		},
-		default: [],
-		description: '',
+		default: {},
 		options: [
 			{
 				displayName: 'Title',
@@ -457,7 +454,7 @@ export const  calendarFields = [
 				name: 'participation_mode',
 				type: 'number',
 				default: '',
-				description: 'Mode of participating.', // todo options
+				description: 'Mode of participating.', // todo: make it type options
 			},
 			{
 				displayName: 'Max Participants',
@@ -504,8 +501,7 @@ export const  calendarFields = [
 				],
 			},
 		},
-		default: [],
-		description: '',
+		default: {},
 		options: [
 			{
 				displayName: 'Is Public',
@@ -618,28 +614,15 @@ export const  calendarFields = [
 		description: 'The id of the calendar entry.',
 	},
 	{
-		displayName: 'Binary Data',
-		name: 'binaryDataUpload',
-		type: 'boolean',
-		default: false,
-		required: true,
-		displayOptions: {
-			show: {
-				resource: [
-					'calendar',
-				],
-				operation: [
-					'attachFiles',
-				],
-			},
-		},
-		description: 'The file to attach.',
-	},
-	{
-		displayName: 'File Content',
-		name: 'fileContent',
-		type: 'string',
+		displayName: 'Files',
+		name: 'files',
+		placeholder: 'Add File',
+		type: 'fixedCollection',
 		default: '',
+		description: 'Which files to send.',
+		typeOptions: {
+			multipleValues: true,
+		},
 		displayOptions: {
 			show: {
 				resource: [
@@ -648,35 +631,23 @@ export const  calendarFields = [
 				operation: [
 					'attachFiles',
 				],
-				binaryDataUpload: [
-					false,
-				],
 			},
 		},
-		placeholder: '',
-		description: 'The text content of the file to upload.',
-	},
-	{
-		displayName: 'Binary Property',
-		name: 'binaryPropertyName',
-		type: 'string',
-		default: 'data',
-		required: true,
-		displayOptions: {
-			show: {
-				resource: [
-					'calendar',
-				],
-				operation: [
-					'attachFiles',
-				],
-				binaryDataUpload: [
-					true,
+		options: [
+			{
+				displayName: 'File',
+				name: 'file',
+				values: [
+					{
+						displayName: 'Property Name',
+						name: 'binaryPropertyName',
+						type: 'string',
+						default: 'data',
+						description: 'Name of the binary property which contains the data for the file to be sent.',
+					},
 				],
 			},
-		},
-		placeholder: '',
-		description: 'Name of the binary property which contains the data for the file to be attached.',
+		],
 	},
 
     /* -------------------------------------------------------------------------- */
