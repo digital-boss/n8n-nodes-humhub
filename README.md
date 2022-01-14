@@ -2,6 +2,7 @@
 
 An n8n node consuming HumHub API.
 
+Developed with financial support from [Transition Network](https://transitionnetwork.org/) If you would like to support their Free Software work contribute to [Open collective](https://opencollective.com/transition-platform)
 
 ## License
 
