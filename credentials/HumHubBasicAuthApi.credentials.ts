@@ -33,5 +33,11 @@ export class HumHubBasicAuthApi implements ICredentialType {
 			default: '',
 			placeholder: 'https://example.humhub.com',
 		},
+		{
+			displayName: 'Testing Mode',
+			name: 'testingMode',
+			type: 'boolean',
+			default: false,
+		},
 	];
 }

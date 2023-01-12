@@ -19,13 +19,15 @@ import {
 export async function humhubApiRequest(this: IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions, method: string, resource: string, body: any = {}, qs: IDataObject = {}, uri?: string, encoding?: null | undefined): Promise<any> { // tslint:disable-line:no-any
 	const authenticationMethod = this.getNodeParameter('authentication', 0) as string;
 
+	let testingMode;
 	let token = '';
 	let url = '';
 	if (authenticationMethod === 'basicAuth') {
-		const credentials = await this.getCredentials('humhubApi') as IDataObject;
+		const credentials = await this.getCredentials('humhubBasicAuthApi') as IDataObject;
 		if (credentials === undefined) {
 			throw new NodeOperationError(this.getNode(), 'No credentials got returned!');
 		}
+		testingMode = credentials.testingMode;
 		const auth = await getAccessToken.call(this, credentials as ICredentialDataDecryptedObject) as IDataObject;
 		token = auth.auth_token as string;
 		url = credentials.url as string;
@@ -34,6 +36,7 @@ export async function humhubApiRequest(this: IExecuteFunctions | IExecuteSingleF
 		if (credentials === undefined) {
 			throw new NodeOperationError(this.getNode(), 'No credentials got returned!');
 		}
+		testingMode = credentials.testingMode;
 		token = credentials.accessToken as string;
 		url = credentials.url as string;
 	}
@@ -58,11 +61,19 @@ export async function humhubApiRequest(this: IExecuteFunctions | IExecuteSingleF
 		options.encoding = null;
 	}
 
-	try {
-		//@ts-ignore
-		return await this.helpers.request(options);
-	} catch (error) {
-		throw new NodeApiError(this.getNode(), error);
+	if (testingMode) {
+		// Adjust options property json because of n8n showing empty object when it exists
+		const adjustedOptions: IDataObject = options as IDataObject;
+		adjustedOptions.xJson = adjustedOptions.json;
+		delete adjustedOptions.json;
+		return adjustedOptions;
+	} else {
+		try {
+			//@ts-ignore
+			return await this.helpers.request(options);
+		} catch (error) {
+			throw new NodeApiError(this.getNode(), error);
+		}
 	}
 }
 
