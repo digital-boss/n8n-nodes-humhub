@@ -25,7 +25,6 @@
     ],
     "n8n": {
         "credentials": [
-            "dist/credentials/HumHubApi.credentials.js",
             "dist/credentials/HumHubBasicAuthApi.credentials.js",
             "dist/credentials/HumHubJwtApi.credentials.js"
         ],

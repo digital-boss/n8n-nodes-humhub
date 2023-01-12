@@ -17,30 +17,36 @@ import {
 } from 'n8n-workflow';
 
 export async function humhubApiRequest(this: IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions, method: string, resource: string, body: any = {}, qs: IDataObject = {}, uri?: string, encoding?: null | undefined): Promise<any> { // tslint:disable-line:no-any
-	// const authenticationMethod = this.getNodeParameter('authentication', 0, 'serviceAccount') as string;
+	const authenticationMethod = this.getNodeParameter('authentication', 0) as string;
 
-	// let authorization = '';
-	// let url = '';
-	// if (authenticationMethod === 'serviceAccount') {
-		const credentials = await this.getCredentials('humhubApi');
+	let token = '';
+	let url = '';
+	if (authenticationMethod === 'basicAuth') {
+		const credentials = await this.getCredentials('humhubApi') as IDataObject;
 		if (credentials === undefined) {
 			throw new NodeOperationError(this.getNode(), 'No credentials got returned!');
 		}
-		const auth = await getAccessToken.call(this, credentials as ICredentialDataDecryptedObject);
-
-	// } else {
-	//
-	// }
+		const auth = await getAccessToken.call(this, credentials as ICredentialDataDecryptedObject) as IDataObject;
+		token = auth.auth_token as string;
+		url = credentials.url as string;
+	} else { // authenticationMethod === 'jwtToken'
+		const credentials = await this.getCredentials('humhubJwtApi') as IDataObject;
+		if (credentials === undefined) {
+			throw new NodeOperationError(this.getNode(), 'No credentials got returned!');
+		}
+		token = credentials.accessToken as string;
+		url = credentials.url as string;
+	}
 
 	const options: OptionsWithUri = {
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${auth.auth_token}`,
+			'Authorization': `Bearer ${token}`,
 		},
 		method,
 		body,
 		qs,
-		uri: uri || `${credentials.url}/api/v1${resource}`,
+		uri: uri || `${url}/api/v1${resource}`,
 		json: true,
 	};
 

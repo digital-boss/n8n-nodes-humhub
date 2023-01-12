@@ -70,7 +70,6 @@ import {
 	mailTagOperations,
 	mailTagFields,
 } from './descriptions';
-import * as buffer from "buffer";
 
 type Files = {
 	file: File[];
@@ -97,60 +96,41 @@ export class HumHub implements INodeType {
 		outputs: ['main'],
 		credentials: [
 			{
-				name: 'humhubApi',
+				name: 'humhubJwtApi',
 				required: true,
-				// displayOptions: {
-				// 	show: {
-				// 		authentication: [
-				// 			'credentials',
-				// 		],
-				// 	},
-				// },
+				displayOptions: {
+					show: {
+						authentication: ['jwtToken'],
+					},
+				},
 			},
-			// {
-			// 	name: 'humhubJwtApi',
-			// 	required: true,
-			// 	displayOptions: {
-			// 		show: {
-			// 			authentication: [
-			// 				'jwtToken',
-			// 			],
-			// 		},
-			// 	},
-			// },
-			// {
-			// 	name: 'humhubBasicAuthApi',
-			// 	required: true,
-			// 	displayOptions: {
-			// 		show: {
-			// 			authentication: [
-			// 				'basicAuth',
-			// 			],
-			// 		},
-			// 	},
-			// },
+			{
+				name: 'humhubBasicAuthApi',
+				required: true,
+				displayOptions: {
+					show: {
+						authentication: ['basicAuth'],
+					},
+				},
+			},
 		],
 		properties: [
-			// {
-			// 	displayName: 'Authentication',
-			// 	name: 'authentication',
-			// 	type: 'options',
-			// 	options: [
-			// 		{
-			// 			name: 'Credentials',
-			// 			value: 'credentials',
-			// 		},
-			// 		{
-			// 			name: 'JWT Token',
-			// 			value: 'jwtToken',
-			// 		},
-			// 		{
-			// 			name: 'Basic Auth',
-			// 			value: 'basicAuth',
-			// 		},
-			// 	],
-			// 	default: 'credentials',
-			// },
+			{
+				displayName: 'Authentication',
+				name: 'authentication',
+				type: 'options',
+				options: [
+					{
+						name: 'Basic Auth',
+						value: 'basicAuth',
+					},
+					{
+						name: 'JWT Token',
+						value: 'jwtToken',
+					},
+				],
+				default: 'basicAuth',
+			},
 			{
 				displayName: 'Resource',
 				name: 'resource',
