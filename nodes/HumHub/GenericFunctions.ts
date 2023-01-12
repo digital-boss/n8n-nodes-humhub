@@ -63,7 +63,8 @@ export async function humhubApiRequest(this: IExecuteFunctions | IExecuteSingleF
 
 	if (testingMode) {
 		// Adjust options property json because of n8n showing empty object when it exists
-		const adjustedOptions: IDataObject = options as IDataObject;
+		const adjustedOptions: IDataObject = {};
+		Object.assign(adjustedOptions, options);
 		adjustedOptions.xJson = adjustedOptions.json;
 		delete adjustedOptions.json;
 		return adjustedOptions;
