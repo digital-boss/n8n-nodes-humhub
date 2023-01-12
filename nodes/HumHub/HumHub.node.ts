@@ -71,6 +71,8 @@ import {
 	mailTagFields,
 } from './descriptions';
 
+import { version } from '../version';
+
 type Files = {
 	file: File[];
 };
@@ -87,7 +89,7 @@ export class HumHub implements INodeType {
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Consume HumHub API',
+		description: `Consume HumHub API (v.${version})`,
 		defaults: {
 			name: 'HumHub',
 			color: '#60c3d0',
