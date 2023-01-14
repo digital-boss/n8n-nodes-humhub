@@ -6,7 +6,7 @@ import {
     getPagingParameters
 } from '../GenericFunctions';
 
-export const surveyOperations = [
+export const surveyAnswerOperations = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -14,30 +14,15 @@ export const surveyOperations = [
 		displayOptions: {
 			show: {
 				resource: [
-					'survey',
+					'surveyAnswer',
 				],
 			},
 		},
 		options: [
 			{
-				name: 'Get All',
-				value: 'getAll',
-				description: 'Find all surveys',
-			},
-			{
-				name: 'Get All Global',
-				value: 'getAllGlobal',
-				description: 'Find all surveys by container',
-			},
-			{
-				name: 'Get All By Container',
-				value: 'getAllByContainer',
-				description: 'Find all surveys by container',
-			},
-			{
 				name: 'Get',
 				value: 'get',
-				description: 'Get a survey by id',
+				description: 'Get a survey answer by id',
 			},
 
 		],
@@ -46,75 +31,12 @@ export const surveyOperations = [
 	},
 ] as INodeProperties[];
 
-export const  surveyFields = [
+export const  surveyAnswerFields = [
+
+
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 survey:getAll	                              */
-	/* -------------------------------------------------------------------------- */
-
-    ...getPagingParameters('survey'),
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 survey:getAllGlobal	                              */
-	/* -------------------------------------------------------------------------- */
-
-    ...getPagingParameters('surveyGlobal'),
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 survey:getAllByContainer	                  */
-	/* -------------------------------------------------------------------------- */
-
-	{
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'survey',
-				],
-				operation: [
-					'getAllByContainer',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of content container.',
-	},
-    ...getPagingParameters('survey', 'getAllByContainer'),
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 survey:deleteAllByContainer	              */
-	/* -------------------------------------------------------------------------- */
-
-	{
-		displayName: 'ID',
-		name: 'id',
-		type: 'number',
-		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
-		displayOptions: {
-			show: {
-				resource: [
-					'survey',
-				],
-				operation: [
-					'deleteAllByContainer',
-				],
-			},
-		},
-		default: '',
-		description: 'The id of content container.',
-	},
-
-	/* -------------------------------------------------------------------------- */
-	/*                                 survey:get                                   */
+	/*                                 surveyAnswer:get                                   */
 	/* -------------------------------------------------------------------------- */
 
     {
@@ -128,7 +50,7 @@ export const  surveyFields = [
 		displayOptions: {
 			show: {
 				resource: [
-					'survey',
+					'surveyAnswer',
 				],
 				operation: [
 					'get',
@@ -136,7 +58,7 @@ export const  surveyFields = [
 			},
 		},
 		default: '',
-		description: 'The id of the survey.',
+		description: 'The id of the survey answer.',
 	},
 
 ] as INodeProperties[];

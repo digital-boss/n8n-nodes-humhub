@@ -57,6 +57,12 @@ import {
 	cFileFields,
 	cFileItemManagementOperations,
 	cFileItemManagementFields,
+	surveyOperations,
+	surveyFields,
+	surveyAnswerOperations,
+	surveyAnswerFields,
+	surveyAnswersOperations,
+	surveyAnswersFields,
 	taskOperations,
 	taskFields,
 	taskListOperations,
@@ -208,6 +214,18 @@ export class HumHub implements INodeType {
 						value: 'cFileItemManagement',
 					},
 					{
+						name: 'Survey',
+						value: 'survey',
+					},
+					{
+						name: 'survey Answer',
+						value: 'surveyAnswer',
+					},
+					{
+						name: 'survey Answers',
+						value: 'surveyAnswers',
+					},
+					{
 						name: 'Task',
 						value: 'task',
 					},
@@ -278,6 +296,12 @@ export class HumHub implements INodeType {
 			...cFileFields,
 			...cFileItemManagementOperations,
 			...cFileItemManagementFields,
+			...surveyOperations,
+			...surveyFields,
+			...surveyAnswerOperations,
+			...surveyAnswerFields,
+			...surveyAnswersOperations,
+			...surveyAnswersFields,
 			...taskOperations,
 			...taskFields,
 			...taskListOperations,
@@ -2145,7 +2169,158 @@ export class HumHub implements INodeType {
 						);
 					}
 
-				} else if (resource === 'task') {
+				} else if (resource === 'survey') {
+                    if (operation === 'getAll') {
+
+                        // ----------------------------------------
+                        //             survey:getAll
+                        // ----------------------------------------
+
+                        const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+                        if (returnAll) {
+                            responseData = await humhubApiRequestAllItems.call(
+                                this,
+                                'results',
+                                'GET',
+                                `/survey`,
+                            );
+                        } else {
+                            // get additional fields input for limit and page
+                            const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+                            Object.assign(qs, queryParameters);
+
+                            responseData = await humhubApiRequest.call(
+                                this,
+                                'GET',
+                                `/survey`,
+                                undefined,
+                                qs,
+                            );
+                        }
+
+                    } else if (operation === 'getAllGlobal') {
+
+                        // ----------------------------------------
+                        //             survey:getAllGlobal
+                        // ----------------------------------------
+
+                        const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+                        if (returnAll) {
+                            responseData = await humhubApiRequestAllItems.call(
+                                this,
+                                'results',
+                                'GET',
+                                `/survey/global`,
+                            );
+                        } else {
+                            // get additional fields input for limit and page
+                            const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+                            Object.assign(qs, queryParameters);
+
+                            responseData = await humhubApiRequest.call(
+                                this,
+                                'GET',
+                                `/survey/global`,
+                                undefined,
+                                qs,
+                            );
+                        }
+
+                    } else if (operation === 'getAllByContainer') {
+
+                        // ----------------------------------------
+                        //             survey:getAllByContainer
+                        // ----------------------------------------
+
+                        const id = this.getNodeParameter('id', i) as number;
+
+                        const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+                        if (returnAll) {
+                            responseData = await humhubApiRequestAllItems.call(
+                                this,
+                                'results',
+                                'GET',
+                                `/survey/container/${id}`,
+                            );
+                        } else {
+                            // get additional fields input for limit and page
+                            const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+                            Object.assign(qs, queryParameters);
+
+                            responseData = await humhubApiRequest.call(
+                                this,
+                                'GET',
+                                `/survey/container/${id}`,
+                                undefined,
+                                qs,
+                            );
+                        }
+
+                    } else if (operation === 'get') {
+
+                        // ----------------------------------------
+                        //             survey:get
+                        // ----------------------------------------
+
+                        const id = this.getNodeParameter('id', i) as number;
+
+                        responseData = await humhubApiRequest.call(
+                            this,
+                            'GET',
+                            `/survey/${id}`,
+                        );
+
+                    }
+
+                }  else if (resource === 'surveyAnswer') {
+                    if (operation === 'get') {
+
+                        // ----------------------------------------
+                        //             surveyAnswer:get
+                        // ----------------------------------------
+
+                        const id = this.getNodeParameter('id', i) as number;
+
+                        responseData = await humhubApiRequest.call(
+                            this,
+                            'GET',
+                            `/survey/answer/${id}`,
+                        );
+
+                    }
+                } else if (resource === 'surveyAnswers') {
+                    if (operation === 'getAll') {
+
+                        // ----------------------------------------
+                        //             surveyAnswers:getAll
+                        // ----------------------------------------
+
+                        const pageId = this.getNodeParameter('surveyId', i) as number;
+
+                        const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
+                        if (returnAll) {
+                            responseData = await humhubApiRequestAllItems.call(
+                                this,
+                                'results',
+                                'GET',
+                                `/survey/${surveyId}/answers`,
+                            );
+                        } else {
+                            // get additional fields input for limit and page
+                            const queryParameters = this.getNodeParameter('queryParameters', i) as IDataObject;
+                            Object.assign(qs, queryParameters);
+
+                            responseData = await humhubApiRequest.call(
+                                this,
+                                'GET',
+                                `/survey/${surveyId}/answers`,
+                                undefined,
+                                qs,
+                            );
+                        }
+
+                    }
+                } else if (resource === 'task') {
 					 if (operation === 'getAll') {
 
 						// ----------------------------------------

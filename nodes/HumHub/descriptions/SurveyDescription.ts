@@ -27,7 +27,7 @@ export const surveyOperations = [
 			{
 				name: 'Get All Global',
 				value: 'getAllGlobal',
-				description: 'Find all surveys by container',
+				description: 'Find all global surveys',
 			},
 			{
 				name: 'Get All By Container',
