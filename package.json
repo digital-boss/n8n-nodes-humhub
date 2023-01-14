@@ -1,16 +1,16 @@
 {
-    "name": "@funkycram/n8n-nodes-humhub",
+    "name": "@digital-boss/n8n-nodes-humhub",
     "version": "0.1.8",
     "description": "A node consuming the HumHub API.",
     "license": "MIT",
     "homepage": "https://n8n.io",
     "author": {
-        "name": "Marc FARRE",
-        "email": "webmaster@marc.fun"
+        "name": "Valentina Lilova",
+        "email": "valentina.lilova@digital-boss.de"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/funkycram/n8n-nodes-humhub.git"
+        "url": "https://github.com/valentina98/n8n-nodes-humhub.git"
     },
     "main": "index.js",
     "scripts": {
