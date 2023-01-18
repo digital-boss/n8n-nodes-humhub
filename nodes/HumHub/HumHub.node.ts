@@ -2295,7 +2295,7 @@ export class HumHub implements INodeType {
                         //             surveyAnswers:getAll
                         // ----------------------------------------
 
-                        const pageId = this.getNodeParameter('surveyId', i) as number;
+                        const surveyId = this.getNodeParameter('surveyId', i) as number;
 
                         const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
                         if (returnAll) {

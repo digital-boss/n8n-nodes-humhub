@@ -42,9 +42,9 @@ export const  surveyAnswersFields = [
 		name: 'surveyId',
 		type: 'number',
 		required: true,
-        typeOptions: {
-            numberStepSize: 1,
-        },
+		typeOptions: {
+			numberStepSize: 1,
+		},
 		displayOptions: {
 			show: {
 				resource: [
