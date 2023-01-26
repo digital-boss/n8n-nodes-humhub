@@ -77,6 +77,10 @@ export const notificationFields = [
 				value: 'calendar',
 			},
 			{
+				name: 'Survey',
+				value: 'survey',
+			},
+			{
 				name: 'Task',
 				value: 'task',
 			},
