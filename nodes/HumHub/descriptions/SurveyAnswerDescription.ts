@@ -2,10 +2,6 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
-import {
-    getPagingParameters
-} from '../GenericFunctions';
-
 export const surveyAnswerOperations = [
 	{
 		displayName: 'Operation',
@@ -26,7 +22,7 @@ export const surveyAnswerOperations = [
 			},
 
 		],
-		default: 'getAll',
+		default: 'get',
 		description: 'The operation to perform.',
 	},
 ] as INodeProperties[];
@@ -36,7 +32,7 @@ export const  surveyAnswerFields = [
 
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 surveyAnswer:get                                   */
+	/*                                 surveyAnswer:get                           */
 	/* -------------------------------------------------------------------------- */
 
     {

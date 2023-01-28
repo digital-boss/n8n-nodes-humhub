@@ -49,16 +49,16 @@ export const surveyOperations = [
 export const  surveyFields = [
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 survey:getAll	                              */
+	/*                                 survey:getAll	                          */
 	/* -------------------------------------------------------------------------- */
 
     ...getPagingParameters('survey'),
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 survey:getAllGlobal	                              */
+	/*                                 survey:getAllGlobal	                      */
 	/* -------------------------------------------------------------------------- */
 
-    ...getPagingParameters('surveyGlobal'),
+    ...getPagingParameters('survey', 'getAllGlobal'),
 
 	/* -------------------------------------------------------------------------- */
 	/*                                 survey:getAllByContainer	                  */
@@ -85,10 +85,36 @@ export const  surveyFields = [
 		default: '',
 		description: 'The id of content container.',
 	},
+	{
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
+		displayOptions: {
+			show: {
+				resource: [
+					'survey',
+				],
+				operation: [
+					'getAllByContainer',
+				],
+			},
+		},
+		default: [],
+		description: '',
+		options: [
+			{
+				displayName: 'Topics',
+				name: 'topics',
+				type: 'string',
+				default: '',
+				description: 'Comma separated list of topics to filter. Example: Music,Dancing',
+			},
+		],
+	},
     ...getPagingParameters('survey', 'getAllByContainer'),
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 survey:get                                   */
+	/*                                 survey:get                                 */
 	/* -------------------------------------------------------------------------- */
 
     {

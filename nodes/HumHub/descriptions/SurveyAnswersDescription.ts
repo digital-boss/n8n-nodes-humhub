@@ -34,7 +34,7 @@ export const surveyAnswersOperations = [
 export const  surveyAnswersFields = [
 
 	/* -------------------------------------------------------------------------- */
-	/*                                 surveyAnswers:getAll                              */
+	/*                              surveyAnswers:getAll                          */
 	/* -------------------------------------------------------------------------- */
 
 	{

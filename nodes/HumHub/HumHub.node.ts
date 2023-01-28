@@ -218,11 +218,11 @@ export class HumHub implements INodeType {
 						value: 'survey',
 					},
 					{
-						name: 'survey Answer',
+						name: 'Survey Answer',
 						value: 'surveyAnswer',
 					},
 					{
-						name: 'survey Answers',
+						name: 'Survey Answers',
 						value: 'surveyAnswers',
 					},
 					{
@@ -2233,6 +2233,8 @@ export class HumHub implements INodeType {
                         // ----------------------------------------
 
                         const id = this.getNodeParameter('id', i) as number;
+                        const additionalFields = this.getNodeParameter('additionalFields', i) as string;
+						Object.assign(qs, additionalFields);
 
                         const returnAll = this.getNodeParameter('returnAll', 0) as IDataObject;
                         if (returnAll) {
@@ -2241,6 +2243,8 @@ export class HumHub implements INodeType {
                                 'results',
                                 'GET',
                                 `/survey/container/${id}`,
+								undefined,
+								qs
                             );
                         } else {
                             // get additional fields input for limit and page
