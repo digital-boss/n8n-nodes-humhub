@@ -6,4 +6,4 @@
 
 [N8N documentation on custom nodes](https://docs.n8n.io/nodes/creating-nodes/create-n8n-nodes-module.html)
 
-[Click here to view the README](https://digital-boss.de/n8n/?packageName=n8n-nodes-humhub)
+[Click here to see the rest of the README](https://digital-boss.de/n8n/?packageName=n8n-nodes-humhub)
